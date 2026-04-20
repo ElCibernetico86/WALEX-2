@@ -1,9 +1,12 @@
 {
   "name": "react-example",
+  "homepage": "https://ElCibernetico86.github.io/WALEX-2/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "dev": "vite --port=3003 --host=0.0.0.0",
     "build": "vite build",
     "preview": "vite preview",
