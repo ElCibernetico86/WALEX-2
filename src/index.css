@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", sans-serif;
+  --color-royalty-blue: #002366;
+  --color-accent-gold: #D4AF37;
+}
+
+@layer base {
+  body {
+    @apply font-sans bg-white text-slate-900 antialiased selection:bg-royalty-blue selection:text-white;
+  }
+  
+  h1, h2, h3, h4 {
+    @apply font-display tracking-tight;
+  }
+}
+
+.glass-nav {
+  @apply bg-white/70 backdrop-blur-md border-b border-white/20;
+}
+
+.apple-card {
+  @apply bg-[#F5F5F7] rounded-[32px] overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-1;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
