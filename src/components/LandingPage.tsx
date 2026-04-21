@@ -52,7 +52,7 @@ const Navbar = () => {
               maskSize: "cover",
               maskPosition: "center"
             }}
-            aria-label="WALEX Logo"
+            aria-label="WALLEX Logo"
             role="img"
           />
           <div className="flex flex-col w-[110px] leading-none">
@@ -60,7 +60,7 @@ const Navbar = () => {
               className="flex justify-between w-full font-display font-bold text-xl"
               style={{ color: primaryColor }}
             >
-              {"WALEX".split("").map((char, i) => (
+              {"WALLEX".split("").map((char, i) => (
                 <span key={i} className="inline-block">{char}</span>
               ))}
             </motion.div>
@@ -279,14 +279,14 @@ const Process = () => {
     { number: "01", title: "Consultation", text: "We discuss your vision, assessing both wall condition and color goals." },
     { number: "02", title: "Wall Prep", text: "Expert tape, bed, and texture application to create the perfect canvas." },
     { number: "03", title: "Painting", text: "Our team applies premium finishes with superb quality and detail." },
-    { number: "04", title: "Inspection", text: "A final walkthrough to ensure every wall meets the WALEX standard." }
+    { number: "04", title: "Inspection", text: "A final walkthrough to ensure every wall meets the WALLEX standard." }
   ];
 
   return (
     <section id="process" className="py-24 bg-slate-50">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-20">
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">The WALEX Standard</h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">The WALLEX Standard</h2>
           <p className="text-xl text-slate-500 max-w-2xl mx-auto">A refined process designed for minimal disruption and maximum quality.</p>
         </div>
 
@@ -413,12 +413,12 @@ const Footer = () => {
                   maskSize: "cover",
                   maskPosition: "center"
                 }}
-                aria-label="WALEX Logo"
+                aria-label="WALLEX Logo"
                 role="img"
               />
               <div className="flex flex-col w-[150px] leading-none">
                 <div className="flex justify-between w-full font-display font-bold text-2xl">
-                  {"WALEX".split("").map((char, i) => (
+                  {"WALLEX".split("").map((char, i) => (
                     <span key={i} className="inline-block">{char}</span>
                   ))}
                 </div>
@@ -459,7 +459,7 @@ const Footer = () => {
           <div>
             <h4 className="font-bold mb-6">Contact Us</h4>
             <ul className="space-y-4 text-white/50">
-              <li className="flex items-center gap-2"><Phone className="w-4 h-4" /> (214) 555-0123</li>
+              <li className="flex items-center gap-2"><Phone className="w-4 h-4" /> (972) 904-5132</li>
               <li className="flex items-center gap-2"><Mail className="w-4 h-4" /> hello@walexwalls.com</li>
               <li className="flex items-center gap-2"><MapPin className="w-4 h-4" /> North Dallas, TX</li>
             </ul>
@@ -467,7 +467,7 @@ const Footer = () => {
         </div>
 
         <div className="pt-8 border-t border-white/10 flex flex-col md:row justify-between items-center gap-4 text-white/30 text-sm">
-          <p>© 2026 WALEX. All rights reserved.</p>
+          <p>© 2026 WALLEX. All rights reserved.</p>
           <div className="flex gap-8">
             <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
@@ -493,13 +493,13 @@ export default function LandingPage() {
              <div className="absolute inset-0 bg-gradient-to-br from-royalty-blue/40 to-transparent" />
              <div className="relative z-10">
                <h2 className="text-4xl md:text-6xl font-bold text-white mb-8">Ready to elevate <br />your home?</h2>
-               <p className="text-xl text-white/60 mb-12 max-w-xl mx-auto">Schedule your complimentary consultation today and see why WALEX is the premier choice for your home.</p>
+               <p className="text-xl text-white/60 mb-12 max-w-xl mx-auto">Schedule your complimentary consultation today and see why WALLEX is the premier choice for your home.</p>
                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                  <button className="w-full sm:w-auto bg-white text-royalty-blue px-10 py-5 rounded-full font-bold text-xl hover:scale-105 transition-transform">
                    Request a Quote
                  </button>
                  <button className="w-full sm:w-auto text-white font-bold text-xl flex items-center gap-2 hover:opacity-70 transition-opacity">
-                   Call (214) 555-0123
+                   Call (972) 904-5132
                  </button>
                </div>
              </div>
