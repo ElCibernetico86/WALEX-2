@@ -207,71 +207,72 @@ const Services = () => {
       title: "Cabinet Refinishing",
       description: "Factory-new finishes for your kitchen and bathroom cabinetry.",
       icon: <ShieldCheck className="w-6 h-6" />,
-      image: "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&q=80&w=800",
-      span: "md:col-span-1"
+      image: image: `${import.meta.env.BASE_URL}cabinets.PNG`,
+    ,
+    span: "md:col-span-1"
     },
-    {
-      title: "Exterior Excellence",
-      description: "Durable, weather-resistant coatings to protect and beautify your home.",
-      icon: <Star className="w-6 h-6" />,
+  {
+    title: "Exterior Excellence",
+    description: "Durable, weather-resistant coatings to protect and beautify your home.",
+    icon: <Star className="w-6 h-6" />,
       image: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=800",
-      span: "md:col-span-2"
+        span: "md:col-span-2"
     }
   ];
 
-  return (
-    <section id="services" className="py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="mb-16">
-          <h2 className="text-4xl md:text-6xl font-bold text-slate-900 mb-6">Superior Wall & <br /><span className="text-royalty-blue">Paint Finishes.</span></h2>
-          <p className="text-xl text-slate-500 max-w-2xl">We provide a comprehensive transformation experience, from initial drywall prep to the final coat of paint.</p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {services.map((service, idx) => (
-            <motion.div
-              key={idx}
-              whileInView={{ opacity: 1, y: 0 }}
-              initial={{ opacity: 0, y: 20 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
-              className={`apple-card group relative ${service.span}`}
-            >
-              <div className="absolute inset-0 z-0">
-                <img
-                  src={service.image}
-                  alt={service.title}
-                  className="w-full h-full object-cover opacity-20 group-hover:scale-105 transition-transform duration-700"
-                  referrerPolicy="no-referrer"
-                />
-              </div>
-              <div className="relative z-10 p-10 h-full flex flex-col justify-between min-h-[300px]">
-                <div>
-                  <motion.div
-                    whileHover={{ scale: 1.1, y: -5, rotate: 5 }}
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                    className="w-12 h-12 bg-white rounded-2xl shadow-sm flex items-center justify-center text-royalty-blue mb-6"
-                  >
-                    {service.icon}
-                  </motion.div>
-                  <h3 className="text-2xl font-bold text-slate-900 mb-3">{service.title}</h3>
-                  <p className="text-slate-600 leading-relaxed">{service.description}</p>
-                </div>
-                <div className="mt-8">
-                  <button className="text-royalty-blue font-semibold flex items-center gap-1 group/btn">
-                    Learn more <ChevronRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+return (
+  <section id="services" className="py-24 bg-white">
+    <div className="max-w-7xl mx-auto px-6">
+      <div className="mb-16">
+        <h2 className="text-4xl md:text-6xl font-bold text-slate-900 mb-6">Superior Wall & <br /><span className="text-royalty-blue">Paint Finishes.</span></h2>
+        <p className="text-xl text-slate-500 max-w-2xl">We provide a comprehensive transformation experience, from initial drywall prep to the final coat of paint.</p>
       </div>
-    </section>
-  );
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {services.map((service, idx) => (
+          <motion.div
+            key={idx}
+            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            viewport={{ once: true }}
+            transition={{ delay: idx * 0.1 }}
+            className={`apple-card group relative ${service.span}`}
+          >
+            <div className="absolute inset-0 z-0">
+              <img
+                src={service.image}
+                alt={service.title}
+                className="w-full h-full object-cover opacity-20 group-hover:scale-105 transition-transform duration-700"
+                referrerPolicy="no-referrer"
+              />
+            </div>
+            <div className="relative z-10 p-10 h-full flex flex-col justify-between min-h-[300px]">
+              <div>
+                <motion.div
+                  whileHover={{ scale: 1.1, y: -5, rotate: 5 }}
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                  className="w-12 h-12 bg-white rounded-2xl shadow-sm flex items-center justify-center text-royalty-blue mb-6"
+                >
+                  {service.icon}
+                </motion.div>
+                <h3 className="text-2xl font-bold text-slate-900 mb-3">{service.title}</h3>
+                <p className="text-slate-600 leading-relaxed">{service.description}</p>
+              </div>
+              <div className="mt-8">
+                <button className="text-royalty-blue font-semibold flex items-center gap-1 group/btn">
+                  Learn more <ChevronRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
 };
 
 const Process = () => {
