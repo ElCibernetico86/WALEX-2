@@ -207,11 +207,10 @@ const Services = () => {
       title: "Cabinet Refinishing",
       description: "Factory-new finishes for your kitchen and bathroom cabinetry.",
       icon: <ShieldCheck className="w-6 h-6" />,
-      image: image: `${import.meta.env.BASE_URL}cabinets.PNG`,
-    ,
-    span: "md:col-span-1"
+      image: `${import.meta.env.BASE_URL}cabinets.PNG`,
+      span: "md:col-span-1"
     },
-  {
+    {
     title: "Exterior Excellence",
     description: "Durable, weather-resistant coatings to protect and beautify your home.",
     icon: <Star className="w-6 h-6" />,
