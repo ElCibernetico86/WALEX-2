@@ -45,10 +45,10 @@ const Navbar = () => {
             className="w-10 h-10 rounded-xl"
             style={{
               backgroundColor: primaryColor,
-              WebkitMaskImage: "url('/logo.png')",
+              WebkitMaskImage: `url('${import.meta.env.BASE_URL}logo.png')`,
               WebkitMaskSize: "cover",
               WebkitMaskPosition: "center",
-              maskImage: "url('/logo.png')",
+              maskImage: `url('${import.meta.env.BASE_URL}logo.png')`,
               maskSize: "cover",
               maskPosition: "center"
             }}
@@ -406,10 +406,10 @@ const Footer = () => {
               <div 
                 className="w-12 h-12 bg-white rounded-xl"
                 style={{
-                  WebkitMaskImage: "url('/logo.png')",
+                  WebkitMaskImage: `url('${import.meta.env.BASE_URL}logo.png')`,
                   WebkitMaskSize: "cover",
                   WebkitMaskPosition: "center",
-                  maskImage: "url('/logo.png')",
+                  maskImage: `url('${import.meta.env.BASE_URL}logo.png')`,
                   maskSize: "cover",
                   maskPosition: "center"
                 }}
