@@ -211,11 +211,11 @@ const Services = () => {
       span: "md:col-span-1"
     },
     {
-    title: "Exterior Excellence",
-    description: "Durable, weather-resistant coatings to protect and beautify your home.",
-    icon: <Star className="w-6 h-6" />,
-      image: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=800",
-        span: "md:col-span-2"
+      title: "Exterior Excellence",
+      description: "Durable, weather-resistant coatings to protect and beautify your home.",
+      icon: <Star className="w-6 h-6" />,
+      image: `${import.meta.env.BASE_URL}exterior.PNG`,
+      span: "md:col-span-2"
     }
   ];
 
