@@ -316,7 +316,7 @@ const Process = () => {
 
 const Gallery = () => {
   const images = [
-    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=800",
+    `${import.meta.env.BASE_URL}brick.jpg`,
     "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&q=80&w=800",
     "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&q=80&w=800",
     "https://images.unsplash.com/photo-1600607687940-c52af0369996?auto=format&fit=crop&q=80&w=800",
