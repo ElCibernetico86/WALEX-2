@@ -318,7 +318,7 @@ const Gallery = () => {
   const images = [
     `${import.meta.env.BASE_URL}brick.jpg`,
     `${import.meta.env.BASE_URL}garage.jpg`,
-    "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&q=80&w=800",
+    `${import.meta.env.BASE_URL}wall.jpg`,
     "https://images.unsplash.com/photo-1600607687940-c52af0369996?auto=format&fit=crop&q=80&w=800",
     "https://images.unsplash.com/photo-1600573472591-ee6b68d14c68?auto=format&fit=crop&q=80&w=800",
     "https://images.unsplash.com/photo-1600585154526-990dcea4db0d?auto=format&fit=crop&q=80&w=800"
