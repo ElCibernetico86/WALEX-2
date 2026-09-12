@@ -76,7 +76,7 @@ const Navbar = () => {
         </div>
 
         <div className="hidden md:flex items-center gap-8">
-          {["Services", "Process", "Gallery", "Testimonials"].map((item) => (
+          {["Services", "Process", "Gallery", "Credentials"].map((item) => (
             <motion.a
               key={item}
               href={`#${item.toLowerCase()}`}
@@ -107,7 +107,7 @@ const Navbar = () => {
           animate={{ opacity: 1, y: 0 }}
           className="absolute top-full left-0 w-full bg-white border-b p-6 flex flex-col gap-4 md:hidden shadow-xl"
         >
-          {["Services", "Process", "Gallery", "Testimonials"].map((item) => (
+          {["Services", "Process", "Gallery", "Credentials"].map((item) => (
             <a
               key={item}
               href={`#${item.toLowerCase()}`}
@@ -157,8 +157,8 @@ const Hero = () => {
           style={{ opacity }}
         >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-8 rounded-full bg-white/10 backdrop-blur-md border border-white/20">
-            <Star className="w-4 h-4 fill-accent-gold text-accent-gold" />
-            <span className="text-sm font-medium text-white/90">Trusted by 500+ North Dallas Homeowners · 4.9★ Average Rating</span>
+            <ShieldCheck className="w-4 h-4 text-accent-gold" />
+            <span className="text-sm font-medium text-white/90">Finishing North Texas homes since 2006 · Licensed Texas LLC</span>
           </div>
           <h1 className="text-5xl md:text-8xl font-bold text-white mb-6 leading-[1.1] tracking-tight text-balance">
             Superior Wall & <br />
@@ -369,26 +369,31 @@ const Gallery = () => {
   );
 };
 
-const Testimonials = () => {
-  const reviews = [
-    { name: "Sarah Jenkins", location: "Frisco, TX", text: "The attention to detail was beyond anything I've seen. They treated my home like a museum. Absolutely flawless finish." },
-    { name: "Michael Chen", location: "Plano, TX", text: "Professional, punctual, and the royalty blue accent wall they did in my office is the talk of every Zoom call." },
-    { name: "David Miller", location: "McKinney, TX", text: "WALEX transformed our kitchen cabinets. It saved us thousands compared to a full remodel and looks brand new." }
+/* Testimonials removed 2026-09-12. This section previously carried three
+   invented customers (Sarah Jenkins / Michael Chen / David Miller) and a
+   five-star rating graphic. Fabricated endorsements are deceptive advertising
+   under FTC rules, and the stars implied a rating that doesn't exist yet.
+
+   Replaced with verifiable credentials until there are real reviews to show.
+   When Google reviews exist, bring quotes back here — real name, real city,
+   real words. */
+const Credentials = () => {
+  const facts = [
+    { title: "Since 2006", body: "Twenty years finishing walls in North Texas — the last several running my own crew." },
+    { title: "Licensed Texas LLC", body: "Walex Pro Finishes LLC, registered with the Texas Secretary of State. Insured and ready for GC paperwork." },
+    { title: "One crew, whole job", body: "Tape, bed, texture and paint from the same hands. No handoffs, no finger-pointing between trades." }
   ];
 
   return (
-    <section id="testimonials" className="py-24 bg-royalty-blue text-white">
+    <section id="credentials" className="py-24 bg-royalty-blue text-white">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-20">
-          <div className="flex justify-center gap-1 mb-6">
-            {[...Array(5)].map((_, i) => <Star key={i} className="w-6 h-6 fill-accent-gold text-accent-gold" />)}
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">Trusted by North Dallas</h2>
-          <p className="text-xl text-white/60 max-w-2xl mx-auto">Our reputation is built on one perfect brushstroke at a time.</p>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">Why homeowners and GCs call us</h2>
+          <p className="text-xl text-white/60 max-w-2xl mx-auto">No inflated promises — here's what we actually bring to your job.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {reviews.map((review, idx) => (
+          {facts.map((fact, idx) => (
             <motion.div
               key={idx}
               whileInView={{ opacity: 1, y: 0 }}
@@ -396,11 +401,8 @@ const Testimonials = () => {
               viewport={{ once: true }}
               className="bg-white/5 backdrop-blur-lg border border-white/10 p-10 rounded-[32px]"
             >
-              <p className="text-lg italic mb-8 text-white/90">"{review.text}"</p>
-              <div>
-                <div className="font-bold text-xl">{review.name}</div>
-                <div className="text-white/50 text-sm">{review.location}</div>
-              </div>
+              <div className="font-bold text-2xl mb-4 text-accent-gold">{fact.title}</div>
+              <p className="text-lg text-white/80 leading-relaxed">{fact.body}</p>
             </motion.div>
           ))}
         </div>
@@ -443,7 +445,7 @@ const Footer = () => {
               </div>
             </div>
             <p className="text-white/50 max-w-sm mb-8 leading-relaxed">
-              The Wall Experts. Elevating residential spaces across North Dallas with premium painting services and uncompromising quality.
+              Walex Pro Finishes LLC — tape, bed, texture and paint for North Dallas homes. A licensed Texas company.
             </p>
             <div className="flex gap-4">
               <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors cursor-pointer">
@@ -473,14 +475,13 @@ const Footer = () => {
             <h4 className="font-bold mb-6">Contact Us</h4>
             <ul className="space-y-4 text-white/50">
               <li className="flex items-center gap-2"><Phone className="w-4 h-4" /> (972) 904-5132</li>
-              <li className="flex items-center gap-2"><Mail className="w-4 h-4" /> hello@walexwalls.com</li>
-              <li className="flex items-center gap-2"><MapPin className="w-4 h-4" /> North Dallas, TX</li>
+                            <li className="flex items-center gap-2"><MapPin className="w-4 h-4" /> North Dallas, TX</li>
             </ul>
           </div>
         </div>
 
         <div className="pt-8 border-t border-white/10 flex flex-col md:row justify-between items-center gap-4 text-white/30 text-sm">
-          <p>© 2026 WALEX. All rights reserved.</p>
+          <p>© 2026 Walex Pro Finishes LLC. All rights reserved.</p>
           <div className="flex gap-8">
             <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
@@ -559,7 +560,7 @@ const Offer = () => {
 
 const Guarantee = () => {
   const shields = [
-    { n: "1", title: "[3]-Year No-Peel Warranty", body: "If our paint peels, cracks, or fades within [3] years, we come back and fix it. Free." },
+    { n: "1", title: "The No-Peel Promise", body: "If our paint peels or cracks because of how we prepped or applied it, we come back and fix it. Free." },
     { n: "2", title: "The Zero-Mess Promise", body: "We move the furniture, mask everything, and leave your home cleaner than we found it — or the cleanup is on us." },
     { n: "3", title: "Redo Until You're Thrilled", body: "If you're not thrilled with the result, we'll redo whatever it takes until you are. No fighting, no fine print." },
   ];
@@ -604,7 +605,7 @@ export default function LandingPage() {
       <Process />
       <Gallery />
       <Guarantee />
-      <Testimonials />
+      <Credentials />
       <section className="py-24 bg-white">
         <div className="max-w-5xl mx-auto px-6">
           <div className="bg-slate-950 rounded-[48px] p-12 md:p-20 text-center relative overflow-hidden">
@@ -613,7 +614,7 @@ export default function LandingPage() {
               <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">Your neighbors already <br />booked. Your turn.</h2>
               <div className="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full bg-accent-gold/15 border border-accent-gold/30">
                 <CalendarClock className="w-4 h-4 text-accent-gold" />
-                <span className="text-sm font-semibold text-accent-gold">We take a limited number of jobs each month to protect quality — [X] spots left for [Month]</span>
+                <span className="text-sm font-semibold text-accent-gold">We take a limited number of jobs each month to protect quality — call to check this month's availability</span>
               </div>
               <p className="text-xl text-white/60 mb-12 max-w-xl mx-auto">Free estimate, honest pricing, and a finish you'll be proud to show off — backed by the Triple-Shield Guarantee.</p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
