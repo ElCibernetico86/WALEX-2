@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
-import { ChevronRight, Paintbrush, Home, ShieldCheck, Star, Phone, Mail, MapPin, Menu, X } from "lucide-react";
+import { ChevronRight, Paintbrush, Home, ShieldCheck, Star, Phone, Mail, MapPin, Menu, X, CheckCircle2, Check, Gift, CalendarClock } from "lucide-react";
 import { useState, useEffect } from "react";
 
 const Navbar = () => {
@@ -52,7 +52,7 @@ const Navbar = () => {
               maskSize: "cover",
               maskPosition: "center"
             }}
-            aria-label="WALLEX Logo"
+            aria-label="WALEX Logo"
             role="img"
           />
           <div className="flex flex-col w-[110px] leading-none">
@@ -60,7 +60,7 @@ const Navbar = () => {
               className="flex justify-between w-full font-display font-bold text-xl"
               style={{ color: primaryColor }}
             >
-              {"WALLEX".split("").map((char, i) => (
+              {"WALEX".split("").map((char, i) => (
                 <span key={i} className="inline-block">{char}</span>
               ))}
             </motion.div>
@@ -68,7 +68,7 @@ const Navbar = () => {
               className="flex justify-between w-full font-display text-[6px] font-black uppercase mt-[1px]"
               style={{ color: subTextColor }}
             >
-              {"THE WALL EXPERTS".split("").map((char, i) => (
+              {"PRO FINISHES".split("").map((char, i) => (
                 <span key={i} className="inline-block">{char === " " ? "\u00A0" : char}</span>
               ))}
             </motion.div>
@@ -156,16 +156,29 @@ const Hero = () => {
           transition={{ duration: 0.8, ease: "easeOut" }}
           style={{ opacity }}
         >
-          <h1 className="text-5xl md:text-8xl font-bold text-white mb-8 leading-[1.1] tracking-tight text-balance">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-8 rounded-full bg-white/10 backdrop-blur-md border border-white/20">
+            <Star className="w-4 h-4 fill-accent-gold text-accent-gold" />
+            <span className="text-sm font-medium text-white/90">Trusted by 500+ North Dallas Homeowners · 4.9★ Average Rating</span>
+          </div>
+          <h1 className="text-5xl md:text-8xl font-bold text-white mb-6 leading-[1.1] tracking-tight text-balance">
             Superior Wall & <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/50">Paint Finishes.</span>
           </h1>
-          <p className="text-lg md:text-xl text-white/80 mb-10 max-w-2xl mx-auto font-light leading-relaxed">
-            From tape, bed, and texture to full painting finishes. Delivering superb quality and detail to North Texas homes.
+          <p className="text-lg md:text-xl text-white/80 mb-8 max-w-2xl mx-auto font-light leading-relaxed">
+            We move the furniture. We handle 100% of the cleanup. You just pick the color —
+            from tape, bed, and texture to flawless full-home painting across North Texas.
           </p>
+          <div className="flex flex-wrap items-center justify-center gap-3 mb-10">
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold bg-accent-gold/15 border border-accent-gold/30 text-accent-gold">
+              <CheckCircle2 className="w-4 h-4" /> Most projects done in 48 hours
+            </span>
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold bg-white/10 border border-white/20 text-white/90">
+              <CheckCircle2 className="w-4 h-4" /> Redo-until-you're-thrilled guarantee
+            </span>
+          </div>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button className="w-full sm:w-auto bg-white text-royalty-blue px-8 py-4 rounded-full font-bold text-lg hover:bg-slate-100 transition-all flex items-center justify-center gap-2 group">
-              Start Your Project <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            <button className="w-full sm:w-auto bg-accent-gold text-royalty-blue px-8 py-4 rounded-full font-bold text-lg hover:brightness-105 transition-all flex items-center justify-center gap-2 group">
+              Get a Free Estimate <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
             <button className="w-full sm:w-auto bg-white/10 backdrop-blur-md text-white border border-white/20 px-8 py-4 rounded-full font-bold text-lg hover:bg-white/20 transition-all">
               View Our Work
@@ -279,14 +292,14 @@ const Process = () => {
     { number: "01", title: "Consultation", text: "We discuss your vision, assessing both wall condition and color goals." },
     { number: "02", title: "Wall Prep", text: "Expert tape, bed, and texture application to create the perfect canvas." },
     { number: "03", title: "Painting", text: "Our team applies premium finishes with superb quality and detail." },
-    { number: "04", title: "Inspection", text: "A final walkthrough to ensure every wall meets the WALLEX standard." }
+    { number: "04", title: "Inspection", text: "A final walkthrough to ensure every wall meets the WALEX standard." }
   ];
 
   return (
     <section id="process" className="py-24 bg-slate-50">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-20">
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">The WALLEX Standard</h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">The WALEX Standard</h2>
           <p className="text-xl text-slate-500 max-w-2xl mx-auto">A refined process designed for minimal disruption and maximum quality.</p>
         </div>
 
@@ -413,17 +426,17 @@ const Footer = () => {
                   maskSize: "cover",
                   maskPosition: "center"
                 }}
-                aria-label="WALLEX Logo"
+                aria-label="WALEX Logo"
                 role="img"
               />
               <div className="flex flex-col w-[150px] leading-none">
                 <div className="flex justify-between w-full font-display font-bold text-2xl">
-                  {"WALLEX".split("").map((char, i) => (
+                  {"WALEX".split("").map((char, i) => (
                     <span key={i} className="inline-block">{char}</span>
                   ))}
                 </div>
                 <div className="flex justify-between w-full font-display text-[8px] font-black uppercase text-white/40 mt-[2px]">
-                  {"THE WALL EXPERTS".split("").map((char, i) => (
+                  {"PRO FINISHES".split("").map((char, i) => (
                     <span key={i} className="inline-block">{char === " " ? "\u00A0" : char}</span>
                   ))}
                 </div>
@@ -467,7 +480,7 @@ const Footer = () => {
         </div>
 
         <div className="pt-8 border-t border-white/10 flex flex-col md:row justify-between items-center gap-4 text-white/30 text-sm">
-          <p>© 2026 WALLEX. All rights reserved.</p>
+          <p>© 2026 WALEX. All rights reserved.</p>
           <div className="flex gap-8">
             <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
@@ -478,25 +491,134 @@ const Footer = () => {
   );
 };
 
+const Offer = () => {
+  const stack = [
+    { title: "Full-home painting done right", desc: "Expert prep, premium paint, razor-sharp lines — interior, exterior, or both.", value: "Core" },
+    { title: "Free professional color consultation", desc: "3 curated palettes matched to your home's lighting and style.", value: "$150 value", bonus: true },
+    { title: "Free minor drywall & crack repair", desc: "We tape, bed, and texture-match before we paint — most painters skip this. We don't.", value: "$200 value", bonus: true },
+    { title: "Free labeled touch-up kit", desc: "Leftover paint, labeled by room, so future touch-ups take five minutes.", value: "$75 value", bonus: true },
+    { title: "Priority 48-hour scheduling", desc: "Most projects started and finished fast — we work around your life.", value: "Included", bonus: true },
+  ];
+
+  return (
+    <section id="offer" className="py-24 bg-slate-50">
+      <div className="max-w-4xl mx-auto px-6">
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-6 rounded-full bg-accent-gold/15 border border-accent-gold/30">
+            <Gift className="w-4 h-4 text-accent-gold" />
+            <span className="text-sm font-semibold text-royalty-blue">Everything you get</span>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-5 text-balance">The North Dallas Flawless-Home Package</h2>
+          <p className="text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
+            One crew, one price, zero hassle. Everything included when WALEX finishes your home — plus the extras most painters charge for or skip entirely.
+          </p>
+        </div>
+
+        <div className="bg-white rounded-[32px] shadow-xl p-8 md:p-12">
+          {stack.map((item, idx) => (
+            <motion.div
+              key={idx}
+              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, x: -20 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.08 }}
+              className={`flex items-start gap-4 py-5 ${idx < stack.length - 1 ? "border-b border-slate-100" : ""}`}
+            >
+              <div className={`flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-full mt-0.5 ${item.bonus ? "bg-accent-gold text-royalty-blue" : "bg-royalty-blue text-white"}`}>
+                <Check className="w-4 h-4" strokeWidth={3} />
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center flex-wrap gap-x-3 gap-y-1">
+                  <span className="font-bold text-slate-900">
+                    {item.bonus && <span className="text-accent-gold">BONUS: </span>}{item.title}
+                  </span>
+                  <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${item.bonus ? "bg-accent-gold/15 text-yellow-700" : "bg-slate-100 text-slate-400"}`}>{item.value}</span>
+                </div>
+                <p className="text-slate-600 text-sm leading-relaxed mt-1">{item.desc}</p>
+              </div>
+            </motion.div>
+          ))}
+
+          <div className="text-center mt-8">
+            <p className="text-slate-500 mb-4">Over <strong className="text-slate-900">$425 in bonuses</strong> included free with every project.</p>
+            <button className="bg-accent-gold text-royalty-blue px-8 py-4 rounded-full font-bold text-lg hover:brightness-105 transition-all inline-flex items-center gap-2">
+              Get My Free Estimate <ChevronRight className="w-5 h-5" />
+            </button>
+            <p className="text-slate-400 text-sm mt-3">Takes 60 seconds · No obligation</p>
+          </div>
+        </div>
+
+        <p className="text-center text-slate-500 max-w-2xl mx-auto mt-12 leading-relaxed">
+          <strong className="text-slate-900">Why we're not the cheapest bid:</strong> the lowest quote usually means thin prep —
+          which is exactly why that paint peels in two years. We prep every wall like it's our own home, so it lasts. You pay once, not twice.
+        </p>
+      </div>
+    </section>
+  );
+};
+
+const Guarantee = () => {
+  const shields = [
+    { n: "1", title: "[3]-Year No-Peel Warranty", body: "If our paint peels, cracks, or fades within [3] years, we come back and fix it. Free." },
+    { n: "2", title: "The Zero-Mess Promise", body: "We move the furniture, mask everything, and leave your home cleaner than we found it — or the cleanup is on us." },
+    { n: "3", title: "Redo Until You're Thrilled", body: "If you're not thrilled with the result, we'll redo whatever it takes until you are. No fighting, no fine print." },
+  ];
+
+  return (
+    <section id="guarantee" className="py-24 bg-royalty-blue text-white">
+      <div className="max-w-5xl mx-auto px-6 text-center">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-6 rounded-full bg-accent-gold/15 border border-accent-gold/30">
+          <ShieldCheck className="w-4 h-4 text-accent-gold" />
+          <span className="text-sm font-semibold text-accent-gold">Our Promise</span>
+        </div>
+        <h2 className="text-4xl md:text-6xl font-bold mb-5 text-balance">The WALEX Triple-Shield Guarantee</h2>
+        <p className="text-xl text-white/60 max-w-2xl mx-auto mb-14">We take all the risk, so you don't have to. Three promises, in writing, on every job.</p>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+          {shields.map((s) => (
+            <motion.div
+              key={s.n}
+              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              viewport={{ once: true }}
+              className="bg-white/5 backdrop-blur-lg border border-white/10 p-8 rounded-[32px]"
+            >
+              <div className="w-10 h-10 rounded-full bg-accent-gold text-royalty-blue font-bold flex items-center justify-center mb-5">{s.n}</div>
+              <h3 className="text-xl font-bold mb-3">{s.title}</h3>
+              <p className="text-white/70 leading-relaxed">{s.body}</p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
 export default function LandingPage() {
   return (
     <div className="min-h-screen">
       <Navbar />
       <Hero />
       <Services />
+      <Offer />
       <Process />
       <Gallery />
+      <Guarantee />
       <Testimonials />
       <section className="py-24 bg-white">
         <div className="max-w-5xl mx-auto px-6">
           <div className="bg-slate-950 rounded-[48px] p-12 md:p-20 text-center relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-royalty-blue/40 to-transparent" />
             <div className="relative z-10">
-              <h2 className="text-4xl md:text-6xl font-bold text-white mb-8">Ready to elevate <br />your home?</h2>
-              <p className="text-xl text-white/60 mb-12 max-w-xl mx-auto">Schedule your complimentary consultation today and see why WALLEX is the premier choice for your home.</p>
+              <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">Your neighbors already <br />booked. Your turn.</h2>
+              <div className="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full bg-accent-gold/15 border border-accent-gold/30">
+                <CalendarClock className="w-4 h-4 text-accent-gold" />
+                <span className="text-sm font-semibold text-accent-gold">We take a limited number of jobs each month to protect quality — [X] spots left for [Month]</span>
+              </div>
+              <p className="text-xl text-white/60 mb-12 max-w-xl mx-auto">Free estimate, honest pricing, and a finish you'll be proud to show off — backed by the Triple-Shield Guarantee.</p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <button className="w-full sm:w-auto bg-white text-royalty-blue px-10 py-5 rounded-full font-bold text-xl hover:scale-105 transition-transform">
-                  Request a Quote
+                <button className="w-full sm:w-auto bg-accent-gold text-royalty-blue px-10 py-5 rounded-full font-bold text-xl hover:brightness-105 transition-all">
+                  Get My Free Estimate
                 </button>
                 <button className="w-full sm:w-auto text-white font-bold text-xl flex items-center gap-2 hover:opacity-70 transition-opacity">
                   Call (972) 904-5132
