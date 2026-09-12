@@ -204,28 +204,28 @@ const Services = () => {
   const services = [
     {
       title: "Tape, Bed & Texture",
-      description: "Expert drywall finishing including seamless tape and bed, and custom textures.",
+      description: "Drywall taped, bedded and textured to match the walls you already have.",
       icon: <Home className="w-6 h-6" />,
       image: `${import.meta.env.BASE_URL}texture.jpg`,
       span: "md:col-span-2"
     },
     {
       title: "Full Painting Finish",
-      description: "Superb quality interior and exterior painting with an eye for every detail.",
+      description: "Walls, ceilings, trim and doors — cut in by hand, not taped and hoped.",
       icon: <Paintbrush className="w-6 h-6" />,
       image: "https://images.unsplash.com/photo-1560185127-6ed189bf02f4?auto=format&fit=crop&q=80&w=800",
       span: "md:col-span-1"
     },
     {
       title: "Cabinet Refinishing",
-      description: "Factory-new finishes for your kitchen and bathroom cabinetry.",
+      description: "Cabinet doors and boxes sanded, primed and sprayed for an even, brush-free finish.",
       icon: <ShieldCheck className="w-6 h-6" />,
       image: `${import.meta.env.BASE_URL}cabinets.PNG`,
       span: "md:col-span-1"
     },
     {
-      title: "Exterior Excellence",
-      description: "Durable, weather-resistant coatings to protect and beautify your home.",
+      title: "Exterior Painting",
+      description: "Siding, trim, fascia and doors — prepped, primed and coated to survive a Texas summer.",
       icon: <Star className="w-6 h-6" />,
       image: `${import.meta.env.BASE_URL}exterior.PNG`,
       span: "md:col-span-2"
@@ -236,8 +236,8 @@ const Services = () => {
     <section id="services" className="py-24 bg-white">
       <div className="max-w-7xl mx-auto px-6">
         <div className="mb-16">
-          <h2 className="text-4xl md:text-6xl font-bold text-slate-900 mb-6">Superior Wall & <br /><span className="text-royalty-blue">Paint Finishes.</span></h2>
-          <p className="text-xl text-slate-500 max-w-2xl">We provide a comprehensive transformation experience, from initial drywall prep to the final coat of paint.</p>
+          <h2 className="text-4xl md:text-6xl font-bold text-slate-900 mb-6">What we <br /><span className="text-royalty-blue">actually do.</span></h2>
+          <p className="text-xl text-slate-500 max-w-2xl">Bare drywall to the final coat, by one crew. No subbing the prep out to whoever is cheapest that week.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -291,8 +291,8 @@ const Process = () => {
   const steps = [
     { number: "01", title: "Consultation", text: "We discuss your vision, assessing both wall condition and color goals." },
     { number: "02", title: "Wall Prep", text: "Expert tape, bed, and texture application to create the perfect canvas." },
-    { number: "03", title: "Painting", text: "Our team applies premium finishes with superb quality and detail." },
-    { number: "04", title: "Inspection", text: "A final walkthrough to ensure every wall meets the WALEX standard." }
+    { number: "03", title: "Painting", text: "We cut in by hand and keep a wet edge, so you don't get lap marks down the wall." },
+    { number: "04", title: "Inspection", text: "We walk every room with you and fix whatever you point at before we load up." }
   ];
 
   return (
@@ -341,8 +341,8 @@ const Gallery = () => {
     <section id="gallery" className="py-24 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 mb-16 flex justify-between items-end">
         <div>
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">Recent Transformations</h2>
-          <p className="text-xl text-slate-500">Witness the difference of professional artistry.</p>
+          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">Recent Work</h2>
+          <p className="text-xl text-slate-500">Jobs finished across North Texas.</p>
         </div>
         <button className="hidden md:flex items-center gap-2 text-royalty-blue font-bold">
           View Portfolio <ChevronRight className="w-5 h-5" />
@@ -494,7 +494,7 @@ const Footer = () => {
 
 const Offer = () => {
   const stack = [
-    { title: "Full-home painting done right", desc: "Expert prep, premium paint, razor-sharp lines — interior, exterior, or both.", value: "Core" },
+    { title: "Full-home painting done right", desc: "Full prep, name-brand paint, clean lines — interior, exterior, or both.", value: "Core" },
     { title: "Free professional color consultation", desc: "3 curated palettes matched to your home's lighting and style.", value: "$150 value", bonus: true },
     { title: "Free minor drywall & crack repair", desc: "We tape, bed, and texture-match before we paint — most painters skip this. We don't.", value: "$200 value", bonus: true },
     { title: "Free labeled touch-up kit", desc: "Leftover paint, labeled by room, so future touch-ups take five minutes.", value: "$75 value", bonus: true },
