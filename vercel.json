@@ -4,5 +4,11 @@
     "deploymentEnabled": {
       "gh-pages": false
     }
-  }
+  },
+  "rewrites": [
+    {
+      "source": "/admin",
+      "destination": "/index.html"
+    }
+  ]
 }
