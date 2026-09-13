@@ -9,9 +9,13 @@
 import { supabase, CONTENT_TABLE, CONTENT_ROW_ID } from './_lib.js';
 
 export default async function handler(_req: any, res: any) {
-  // 60s CDN cache: edits appear within a minute, and a burst of visitors
-  // doesn't turn into a burst of database reads.
-  res.setHeader('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=600');
+  /* Short cache on purpose. The first version used s-maxage=60 with a
+     10-minute stale window, which meant saving an edit and refreshing could
+     still show the old text — it looks broken even though nothing is.
+     10s keeps a traffic burst off the database while making a save feel
+     immediate. No stale-while-revalidate: serving content known to be old is
+     exactly the behaviour that caused the confusion. */
+  res.setHeader('Cache-Control', 'public, s-maxage=10, must-revalidate');
 
   if (!supabase) return res.status(200).json({});
 
