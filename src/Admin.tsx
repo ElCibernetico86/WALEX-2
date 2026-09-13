@@ -26,6 +26,20 @@ const labelFor = (key: string) =>
 
 const isImageKey = (key: string) => /image|photo|logo/i.test(key);
 
+/**
+ * A blank entry shaped like the ones already in the list — so "Add" on the
+ * services list produces a service with the right fields, not an empty string.
+ * Falls back to "" for an empty list, where there is no shape to copy.
+ */
+function blankLike(sample: unknown): unknown {
+  if (typeof sample === "string") return "";
+  if (Array.isArray(sample)) return [];
+  if (sample && typeof sample === "object") {
+    return Object.fromEntries(Object.entries(sample).map(([k, v]) => [k, blankLike(v)]));
+  }
+  return "";
+}
+
 /** Draw through a canvas to shrink, compress, and drop metadata in one step. */
 async function shrink(file: File): Promise<{ dataUrl: string; kb: number }> {
   const bitmap = await createImageBitmap(file);
@@ -105,12 +119,21 @@ function Fields({
   onBusy: (b: boolean) => void;
 }) {
   const key = path[path.length - 1] ?? "";
+  /* Inside a list the key is just the index ("3"), so fall back to the list's
+     own name. Without this, adding a gallery photo hands you a text box
+     instead of an upload button — the array is called "images", the new item
+     is called "3". */
+  const parentKey = path[path.length - 2] ?? "";
 
   if (typeof value === "string") {
-    if (isImageKey(key) || /^https?:\/\/\S+\.(jpe?g|png|webp)/i.test(value) || value.startsWith("/")) {
-      if (isImageKey(key) || value.startsWith("/") || /\.(jpe?g|png|webp)/i.test(value)) {
-        return <ImageField value={value} onChange={(v) => onChange(path, v)} onBusy={onBusy} />;
-      }
+    const looksLikeImage =
+      isImageKey(key) ||
+      (/^\d+$/.test(key) && isImageKey(parentKey)) ||
+      value.startsWith("/") ||
+      /\.(jpe?g|png|webp)(\?|$)/i.test(value);
+
+    if (looksLikeImage) {
+      return <ImageField value={value} onChange={(v) => onChange(path, v)} onBusy={onBusy} />;
     }
     const long = value.length > 70;
     return long ? (
@@ -121,16 +144,56 @@ function Fields({
   }
 
   if (Array.isArray(value)) {
+    /* Add, remove and reorder all rewrite the whole array at this path rather
+       than editing one index — simpler to reason about, and it keeps the
+       parent's deepMerge behaviour (arrays replace wholesale) consistent. */
+    const replace = (next: unknown[]) => onChange(path, next);
+    const move = (from: number, to: number) => {
+      if (to < 0 || to >= value.length) return;
+      const next = [...value];
+      [next[from], next[to]] = [next[to], next[from]];
+      replace(next);
+    };
+
     return (
       <div style={S.list}>
         {value.map((item, i) => (
           <div key={i} style={S.listItem}>
-            <div style={S.listIndex}>{i + 1}</div>
+            <div style={S.listControls}>
+              <span style={S.listIndex}>{i + 1}</span>
+              <button
+                type="button"
+                onClick={() => move(i, i - 1)}
+                disabled={i === 0}
+                title="Move up"
+                style={i === 0 ? S.iconBtnOff : S.iconBtn}
+              >↑</button>
+              <button
+                type="button"
+                onClick={() => move(i, i + 1)}
+                disabled={i === value.length - 1}
+                title="Move down"
+                style={i === value.length - 1 ? S.iconBtnOff : S.iconBtn}
+              >↓</button>
+              <button
+                type="button"
+                onClick={() => replace(value.filter((_, n) => n !== i))}
+                title="Remove"
+                style={S.removeBtn}
+              >✕</button>
+            </div>
             <div style={{ flex: 1, minWidth: 0 }}>
               <Fields value={item} path={[...path, String(i)]} onChange={onChange} onBusy={onBusy} />
             </div>
           </div>
         ))}
+        <button
+          type="button"
+          onClick={() => replace([...value, blankLike(value[0])])}
+          style={S.addBtn}
+        >
+          + Add {labelFor(key).replace(/s$/, "").toLowerCase() || "item"}
+        </button>
       </div>
     );
   }
@@ -329,7 +392,12 @@ const S: Record<string, React.CSSProperties> = {
   },
   list: { display: "flex", flexDirection: "column", gap: 12 },
   listItem: { display: "flex", gap: 10, alignItems: "flex-start", background: "#f8fafc", padding: 12, borderRadius: 10 },
-  listIndex: { fontSize: 11, fontWeight: 700, color: "#94a3b8", minWidth: 16, paddingTop: 10 },
+  listIndex: { fontSize: 11, fontWeight: 700, color: "#94a3b8", textAlign: "center" },
+  listControls: { display: "flex", flexDirection: "column", alignItems: "center", gap: 3, paddingTop: 4 },
+  iconBtn: { width: 22, height: 22, padding: 0, border: "1px solid #cbd5e1", background: "#fff", borderRadius: 5, cursor: "pointer", fontSize: 11, lineHeight: 1, color: "#475569" },
+  iconBtnOff: { width: 22, height: 22, padding: 0, border: "1px solid #e2e8f0", background: "#f8fafc", borderRadius: 5, cursor: "default", fontSize: 11, lineHeight: 1, color: "#cbd5e1" },
+  removeBtn: { width: 22, height: 22, padding: 0, border: "1px solid #fecaca", background: "#fff", borderRadius: 5, cursor: "pointer", fontSize: 11, lineHeight: 1, color: "#dc2626" },
+  addBtn: { alignSelf: "flex-start", padding: "8px 14px", border: "1px dashed #cbd5e1", background: "#fff", borderRadius: 8, cursor: "pointer", fontSize: 13, color: "#475569", fontWeight: 600 },
   imageRow: { display: "flex", gap: 10, alignItems: "flex-start" },
   thumb: { width: 64, height: 64, objectFit: "cover", borderRadius: 8, background: "#e2e8f0", flexShrink: 0 },
   thumbEmpty: {
