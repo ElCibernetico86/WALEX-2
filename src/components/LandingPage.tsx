@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
-import { ChevronRight, Paintbrush, Home, ShieldCheck, Star, Phone, Mail, MapPin, Menu, X, CheckCircle2, Check, Gift, CalendarClock } from "lucide-react";
+import { ChevronRight, Paintbrush, Home, ShieldCheck, Star, Phone, MapPin, Menu, X, CheckCircle2, Check, CalendarClock } from "lucide-react";
 import { useState, useEffect } from "react";
 
 const Navbar = () => {
@@ -161,17 +161,14 @@ const Hero = () => {
             <span className="text-sm font-medium text-white/90">Tape, bed, texture &amp; paint · North Dallas</span>
           </div>
           <h1 className="text-5xl md:text-8xl font-bold text-white mb-6 leading-[1.1] tracking-tight text-balance">
-            Superior Wall & <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/50">Paint Finishes.</span>
+            From bare drywall <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/50">to the final coat.</span>
           </h1>
           <p className="text-lg md:text-xl text-white/80 mb-8 max-w-2xl mx-auto font-light leading-relaxed">
             We move the furniture. We handle 100% of the cleanup. You just pick the color —
-            from tape, bed, and texture to flawless full-home painting across North Texas.
+            from tape, bed and texture through to the last coat of paint, across North Texas.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3 mb-10">
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold bg-accent-gold/15 border border-accent-gold/30 text-accent-gold">
-              <CheckCircle2 className="w-4 h-4" /> Most projects done in 48 hours
-            </span>
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold bg-white/10 border border-white/20 text-white/90">
               <CheckCircle2 className="w-4 h-4" /> Redo-until-you're-thrilled guarantee
             </span>
@@ -438,12 +435,9 @@ const Footer = () => {
               Walex Pro Finishes LLC — tape, bed, texture and paint for North Dallas homes.
             </p>
             <div className="flex gap-4">
-              <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors cursor-pointer">
+              <a href="tel:+19729045132" aria-label="Call Walex Pro Finishes" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
                 <Phone className="w-5 h-5" />
-              </div>
-              <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors cursor-pointer">
-                <Mail className="w-5 h-5" />
-              </div>
+              </a>
               <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors cursor-pointer">
                 <MapPin className="w-5 h-5" />
               </div>
@@ -464,7 +458,7 @@ const Footer = () => {
           <div>
             <h4 className="font-bold mb-6">Contact Us</h4>
             <ul className="space-y-4 text-white/50">
-              <li className="flex items-center gap-2"><Phone className="w-4 h-4" /> (972) 904-5132</li>
+              <li><a href="tel:+19729045132" className="flex items-center gap-2 hover:text-white transition-colors"><Phone className="w-4 h-4" /> (972) 904-5132</a></li>
                             <li className="flex items-center gap-2"><MapPin className="w-4 h-4" /> North Dallas, TX</li>
             </ul>
           </div>
@@ -482,67 +476,43 @@ const Footer = () => {
   );
 };
 
-const Offer = () => {
-  const stack = [
-    { title: "Full-home painting done right", desc: "Full prep, name-brand paint, clean lines — interior, exterior, or both.", value: "Core" },
-    { title: "Free professional color consultation", desc: "3 curated palettes matched to your home's lighting and style.", value: "$150 value", bonus: true },
-    { title: "Free minor drywall & crack repair", desc: "We tape, bed, and texture-match before we paint — most painters skip this. We don't.", value: "$200 value", bonus: true },
-    { title: "Free labeled touch-up kit", desc: "Leftover paint, labeled by room, so future touch-ups take five minutes.", value: "$75 value", bonus: true },
-    { title: "Priority 48-hour scheduling", desc: "Most projects started and finished fast — we work around your life.", value: "Included", bonus: true },
-  ];
+/* Bonuses removed 2026-09-12 at Alex's request — a free colour consultation
+   ($150), free drywall/crack repair ($200), a free touch-up kit ($75) and
+   priority 48-hour scheduling, headlined as "Over $425 in bonuses". He hasn't
+   committed to honouring them yet, and a promise you can't keep is worse than
+   no promise.
 
+   That left a one-item value stack, which is not a value stack. The section is
+   now built around the strongest honest copy on the page — the argument for
+   why he isn't the cheapest bid. Bring the stack back if and when the bonuses
+   are real. */
+const Offer = () => {
   return (
     <section id="offer" className="py-24 bg-slate-50">
-      <div className="max-w-4xl mx-auto px-6">
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-6 rounded-full bg-accent-gold/15 border border-accent-gold/30">
-            <Gift className="w-4 h-4 text-accent-gold" />
-            <span className="text-sm font-semibold text-royalty-blue">Everything you get</span>
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-5 text-balance">The North Dallas Flawless-Home Package</h2>
-          <p className="text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
-            One crew, one price, zero hassle. Everything included when WALEX finishes your home — plus the extras most painters charge for or skip entirely.
-          </p>
+      <div className="max-w-3xl mx-auto px-6 text-center">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-6 rounded-full bg-accent-gold/15 border border-accent-gold/30">
+          <Check className="w-4 h-4 text-yellow-700" strokeWidth={3} />
+          <span className="text-sm font-semibold text-royalty-blue">One crew, one price</span>
         </div>
 
-        <div className="bg-white rounded-[32px] shadow-xl p-8 md:p-12">
-          {stack.map((item, idx) => (
-            <motion.div
-              key={idx}
-              whileInView={{ opacity: 1, x: 0 }}
-              initial={{ opacity: 0, x: -20 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.08 }}
-              className={`flex items-start gap-4 py-5 ${idx < stack.length - 1 ? "border-b border-slate-100" : ""}`}
-            >
-              <div className={`flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-full mt-0.5 ${item.bonus ? "bg-accent-gold text-royalty-blue" : "bg-royalty-blue text-white"}`}>
-                <Check className="w-4 h-4" strokeWidth={3} />
-              </div>
-              <div className="flex-1">
-                <div className="flex items-center flex-wrap gap-x-3 gap-y-1">
-                  <span className="font-bold text-slate-900">
-                    {item.bonus && <span className="text-yellow-700">BONUS: </span>}{item.title}
-                  </span>
-                  <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${item.bonus ? "bg-accent-gold/15 text-yellow-700" : "bg-slate-100 text-slate-400"}`}>{item.value}</span>
-                </div>
-                <p className="text-slate-600 text-sm leading-relaxed mt-1">{item.desc}</p>
-              </div>
-            </motion.div>
-          ))}
+        <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 text-balance">
+          Why we're not the cheapest bid
+        </h2>
 
-          <div className="text-center mt-8">
-            <p className="text-slate-500 mb-4">Over <strong className="text-slate-900">$425 in bonuses</strong> included free with every project.</p>
-            <button className="bg-accent-gold text-royalty-blue px-8 py-4 rounded-full font-bold text-lg hover:brightness-105 transition-all inline-flex items-center gap-2">
-              Get My Free Estimate <ChevronRight className="w-5 h-5" />
-            </button>
-            <p className="text-slate-400 text-sm mt-3">Takes 60 seconds · No obligation</p>
-          </div>
-        </div>
-
-        <p className="text-center text-slate-500 max-w-2xl mx-auto mt-12 leading-relaxed">
-          <strong className="text-slate-900">Why we're not the cheapest bid:</strong> the lowest quote usually means thin prep —
-          which is exactly why that paint peels in two years. We prep every wall like it's our own home, so it lasts. You pay once, not twice.
+        <p className="text-lg text-slate-600 leading-relaxed mb-6">
+          The lowest quote usually means thin prep — which is exactly why that paint peels in two
+          years. We prep every wall like it's our own home, so it lasts. You pay once, not twice.
         </p>
+
+        <p className="text-lg text-slate-600 leading-relaxed mb-10">
+          Full prep, name-brand paint, clean lines — interior, exterior, or both. Same crew from the
+          first patch to the last coat, so there's nobody to point a finger at but us.
+        </p>
+
+        <button className="bg-accent-gold text-royalty-blue px-8 py-4 rounded-full font-bold text-lg hover:brightness-105 transition-all inline-flex items-center gap-2">
+          Get My Free Estimate <ChevronRight className="w-5 h-5" />
+        </button>
+        <p className="text-slate-400 text-sm mt-3">Takes 60 seconds · No obligation</p>
       </div>
     </section>
   );
@@ -611,9 +581,9 @@ export default function LandingPage() {
                 <button className="w-full sm:w-auto bg-accent-gold text-royalty-blue px-10 py-5 rounded-full font-bold text-xl hover:brightness-105 transition-all">
                   Get My Free Estimate
                 </button>
-                <button className="w-full sm:w-auto text-white font-bold text-xl flex items-center gap-2 hover:opacity-70 transition-opacity">
-                  Call (972) 904-5132
-                </button>
+                <a href="tel:+19729045132" className="w-full sm:w-auto text-white font-bold text-xl flex items-center justify-center gap-2 hover:opacity-70 transition-opacity">
+                  <Phone className="w-5 h-5" /> Call (972) 904-5132
+                </a>
               </div>
             </div>
           </div>
