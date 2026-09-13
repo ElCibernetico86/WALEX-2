@@ -6,11 +6,10 @@ import {defineConfig, loadEnv} from 'vite';
 export default defineConfig(({mode}) => {
   const env = loadEnv(mode, '.', '');
   return {
-    /* GitHub Pages serves this from /WALEX-2/, so assets must be prefixed there.
-       Vercel serves from the domain root, where that prefix 404s every asset and
-       the page renders blank. Vercel sets VERCEL=1 during its builds, so key off
-       that and both hosts stay correct from one config. */
-    base: process.env.VERCEL ? '/' : '/WALEX-2/',
+    /* Vercel serves from the domain root. The old /WALEX-2/ prefix was for
+       GitHub Pages, retired 2026-09-12 — it was a duplicate of this site
+       competing in search. */
+    base: '/',
     plugins: [react(), tailwindcss()],
     define: {
       'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
