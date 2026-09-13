@@ -210,14 +210,14 @@ const Services = () => {
       title: "Cabinet Refinishing",
       description: "Cabinet doors and boxes sanded, primed and sprayed for an even, brush-free finish.",
       icon: <ShieldCheck className="w-6 h-6" />,
-      image: `${import.meta.env.BASE_URL}cabinets.PNG`,
+      image: `${import.meta.env.BASE_URL}cabinets.jpg`,
       span: "md:col-span-1"
     },
     {
       title: "Exterior Painting",
       description: "Siding, trim, fascia and doors — prepped, primed and coated to survive a Texas summer.",
       icon: <Star className="w-6 h-6" />,
-      image: `${import.meta.env.BASE_URL}exterior.PNG`,
+      image: `${import.meta.env.BASE_URL}exterior.jpg`,
       span: "md:col-span-2"
     }
   ];
