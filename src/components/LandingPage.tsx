@@ -2,8 +2,10 @@ import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 import { ChevronRight, Paintbrush, Home, ShieldCheck, Star, Phone, MapPin, Menu, X, CheckCircle2, Check, CalendarClock } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useSiteContent } from "../useSiteContent";
+import type { SiteContent } from "../siteContent";
 
-const Navbar = () => {
+const Navbar = ({ c }: { c: SiteContent }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [windowHeight, setWindowHeight] = useState(1000); // fallback
   const { scrollY } = useScroll();
@@ -60,7 +62,7 @@ const Navbar = () => {
               className="flex justify-between w-full font-display font-bold text-xl"
               style={{ color: primaryColor }}
             >
-              {"WALEX".split("").map((char, i) => (
+              {c.business.name.split("").map((char, i) => (
                 <span key={i} className="inline-block">{char}</span>
               ))}
             </motion.div>
@@ -68,7 +70,7 @@ const Navbar = () => {
               className="flex justify-between w-full font-display text-[6px] font-black uppercase mt-[1px]"
               style={{ color: subTextColor }}
             >
-              {"PRO FINISHES".split("").map((char, i) => (
+              {c.business.tagline.split("").map((char, i) => (
                 <span key={i} className="inline-block">{char === " " ? "\u00A0" : char}</span>
               ))}
             </motion.div>
@@ -76,7 +78,7 @@ const Navbar = () => {
         </div>
 
         <div className="hidden md:flex items-center gap-8">
-          {["Services", "Process", "Gallery", "Credentials"].map((item) => (
+          {c.nav.links.map((item) => (
             <motion.a
               key={item}
               href={`#${item.toLowerCase()}`}
@@ -87,7 +89,7 @@ const Navbar = () => {
             </motion.a>
           ))}
           <button className="bg-royalty-blue text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-blue-900 transition-all">
-            Get a Quote
+            {c.nav.cta}
           </button>
         </div>
 
@@ -107,7 +109,7 @@ const Navbar = () => {
           animate={{ opacity: 1, y: 0 }}
           className="absolute top-full left-0 w-full bg-white border-b p-6 flex flex-col gap-4 md:hidden shadow-xl"
         >
-          {["Services", "Process", "Gallery", "Credentials"].map((item) => (
+          {c.nav.links.map((item) => (
             <a
               key={item}
               href={`#${item.toLowerCase()}`}
@@ -118,7 +120,7 @@ const Navbar = () => {
             </a>
           ))}
           <button className="bg-royalty-blue text-white px-5 py-3 rounded-xl text-center font-semibold">
-            Get a Quote
+            {c.nav.cta}
           </button>
         </motion.div>
       )}
@@ -126,7 +128,7 @@ const Navbar = () => {
   );
 };
 
-const Hero = () => {
+const Hero = ({ c }: { c: SiteContent }) => {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -141,8 +143,8 @@ const Hero = () => {
     <section ref={containerRef} className="relative h-screen overflow-hidden flex items-center justify-center bg-slate-950">
       <motion.div style={{ y, scale }} className="absolute inset-0 z-0">
         <img
-          src="https://images.unsplash.com/photo-1589939705384-5185138a047a?auto=format&fit=crop&q=80&w=2000"
-          alt="Professional Wall & Paint Finish"
+          src={c.hero.backgroundImage}
+          alt={c.hero.backgroundAlt}
           className="w-full h-full object-cover opacity-60"
           referrerPolicy="no-referrer"
         />
@@ -158,27 +160,26 @@ const Hero = () => {
         >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-8 rounded-full bg-white/10 backdrop-blur-md border border-white/20">
             <ShieldCheck className="w-4 h-4 text-accent-gold" />
-            <span className="text-sm font-medium text-white/90">Tape, bed, texture &amp; paint · North Dallas</span>
+            <span className="text-sm font-medium text-white/90">{c.hero.badge}</span>
           </div>
           <h1 className="text-5xl md:text-8xl font-bold text-white mb-6 leading-[1.1] tracking-tight text-balance">
-            From bare drywall <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/50">to the final coat.</span>
+            {c.hero.headlineTop} <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/50">{c.hero.headlineBottom}</span>
           </h1>
           <p className="text-lg md:text-xl text-white/80 mb-8 max-w-2xl mx-auto font-light leading-relaxed">
-            We move the furniture. We handle 100% of the cleanup. You just pick the color —
-            from tape, bed and texture through to the last coat of paint, across North Texas.
+            {c.hero.body}
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3 mb-10">
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold bg-white/10 border border-white/20 text-white/90">
-              <CheckCircle2 className="w-4 h-4" /> Redo-until-you're-thrilled guarantee
+              <CheckCircle2 className="w-4 h-4" /> {c.hero.chip}
             </span>
           </div>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <button className="w-full sm:w-auto bg-accent-gold text-royalty-blue px-8 py-4 rounded-full font-bold text-lg hover:brightness-105 transition-all flex items-center justify-center gap-2 group">
-              Get a Free Estimate <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              {c.hero.ctaPrimary} <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
             <button className="w-full sm:w-auto bg-white/10 backdrop-blur-md text-white border border-white/20 px-8 py-4 rounded-full font-bold text-lg hover:bg-white/20 transition-all">
-              View Our Work
+              {c.hero.ctaSecondary}
             </button>
           </div>
         </motion.div>
@@ -187,44 +188,28 @@ const Hero = () => {
   );
 };
 
-const Services = () => {
-  const services = [
-    {
-      title: "Tape, Bed & Texture",
-      description: "Drywall taped, bedded and textured to match the walls you already have.",
-      icon: <Home className="w-6 h-6" />,
-      image: `${import.meta.env.BASE_URL}texture.jpg`,
-      span: "md:col-span-2"
-    },
-    {
-      title: "Full Painting Finish",
-      description: "Walls, ceilings, trim and doors — cut in by hand, not taped and hoped.",
-      icon: <Paintbrush className="w-6 h-6" />,
-      image: "https://images.unsplash.com/photo-1560185127-6ed189bf02f4?auto=format&fit=crop&q=80&w=800",
-      span: "md:col-span-1"
-    },
-    {
-      title: "Cabinet Refinishing",
-      description: "Cabinet doors and boxes sanded, primed and sprayed for an even, brush-free finish.",
-      icon: <ShieldCheck className="w-6 h-6" />,
-      image: `${import.meta.env.BASE_URL}cabinets.jpg`,
-      span: "md:col-span-1"
-    },
-    {
-      title: "Exterior Painting",
-      description: "Siding, trim, fascia and doors — prepped, primed and coated to survive a Texas summer.",
-      icon: <Star className="w-6 h-6" />,
-      image: `${import.meta.env.BASE_URL}exterior.jpg`,
-      span: "md:col-span-2"
-    }
+const Services = ({ c }: { c: SiteContent }) => {
+  /* Icons and column spans are layout, not content — they stay here and pair
+     with c.services.items by position. */
+  const icons = [
+    <Home className="w-6 h-6" />,
+    <Paintbrush className="w-6 h-6" />,
+    <ShieldCheck className="w-6 h-6" />,
+    <Star className="w-6 h-6" />,
   ];
+  const spans = ["md:col-span-2", "md:col-span-1", "md:col-span-1", "md:col-span-2"];
+  const services = c.services.items.map((item, i) => ({
+    ...item,
+    icon: icons[i % icons.length],
+    span: spans[i % spans.length],
+  }));
 
   return (
     <section id="services" className="py-24 bg-white">
       <div className="max-w-7xl mx-auto px-6">
         <div className="mb-16">
-          <h2 className="text-4xl md:text-6xl font-bold text-slate-900 mb-6">What we <br /><span className="text-royalty-blue">actually do.</span></h2>
-          <p className="text-xl text-slate-500 max-w-2xl">Bare drywall to the final coat, by one crew. No subbing the prep out to whoever is cheapest that week.</p>
+          <h2 className="text-4xl md:text-6xl font-bold text-slate-900 mb-6">{c.services.headingTop} <br /><span className="text-royalty-blue">{c.services.headingBottom}</span></h2>
+          <p className="text-xl text-slate-500 max-w-2xl">{c.services.intro}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -262,7 +247,7 @@ const Services = () => {
                 </div>
                 <div className="mt-8">
                   <button className="text-royalty-blue font-semibold flex items-center gap-1 group/btn">
-                    Learn more <ChevronRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                    {c.services.linkLabel} <ChevronRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
                   </button>
                 </div>
               </div>
@@ -274,20 +259,15 @@ const Services = () => {
   );
 };
 
-const Process = () => {
-  const steps = [
-    { number: "01", title: "Consultation", text: "We discuss your vision, assessing both wall condition and color goals." },
-    { number: "02", title: "Wall Prep", text: "Expert tape, bed, and texture application to create the perfect canvas." },
-    { number: "03", title: "Painting", text: "We cut in by hand and keep a wet edge, so you don't get lap marks down the wall." },
-    { number: "04", title: "Inspection", text: "We walk every room with you and fix whatever you point at before we load up." }
-  ];
+const Process = ({ c }: { c: SiteContent }) => {
+  const steps = c.process.steps;
 
   return (
     <section id="process" className="py-24 bg-slate-50">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-20">
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">The WALEX Standard</h2>
-          <p className="text-xl text-slate-500 max-w-2xl mx-auto">A refined process designed for minimal disruption and maximum quality.</p>
+          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">{c.process.heading}</h2>
+          <p className="text-xl text-slate-500 max-w-2xl mx-auto">{c.process.intro}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
@@ -314,25 +294,18 @@ const Process = () => {
   );
 };
 
-const Gallery = () => {
-  const images = [
-    `${import.meta.env.BASE_URL}brick.jpg`,
-    `${import.meta.env.BASE_URL}garage.jpg`,
-    `${import.meta.env.BASE_URL}wall.jpg`,
-    `${import.meta.env.BASE_URL}drywall.jpg`,
-    "https://images.unsplash.com/photo-1600573472591-ee6b68d14c68?auto=format&fit=crop&q=80&w=800",
-    "https://images.unsplash.com/photo-1600585154526-990dcea4db0d?auto=format&fit=crop&q=80&w=800"
-  ];
+const Gallery = ({ c }: { c: SiteContent }) => {
+  const images = c.gallery.images;
 
   return (
     <section id="gallery" className="py-24 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 mb-16 flex justify-between items-end">
         <div>
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">Recent Work</h2>
-          <p className="text-xl text-slate-500">Jobs finished across North Texas.</p>
+          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">{c.gallery.heading}</h2>
+          <p className="text-xl text-slate-500">{c.gallery.intro}</p>
         </div>
         <button className="hidden md:flex items-center gap-2 text-royalty-blue font-bold">
-          View Portfolio <ChevronRight className="w-5 h-5" />
+          {c.gallery.cta} <ChevronRight className="w-5 h-5" />
         </button>
       </div>
 
@@ -364,19 +337,15 @@ const Gallery = () => {
    Replaced with verifiable credentials until there are real reviews to show.
    When Google reviews exist, bring quotes back here — real name, real city,
    real words. */
-const Credentials = () => {
-  const facts = [
-    { title: "Two decades on the tools", body: "I have been finishing walls in North Texas since 2006. The company is new — the hands are not." },
-    { title: "We show up and clean up", body: "We move the furniture, mask what needs masking, and leave the place cleaner than we found it." },
-    { title: "One crew, whole job", body: "Tape, bed, texture and paint from the same hands. No handoffs, no finger-pointing between trades." }
-  ];
+const Credentials = ({ c }: { c: SiteContent }) => {
+  const facts = c.credentials.facts;
 
   return (
     <section id="credentials" className="py-24 bg-royalty-blue text-white">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-20">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">Why homeowners and GCs call us</h2>
-          <p className="text-xl text-white/60 max-w-2xl mx-auto">No inflated promises — here's what we actually bring to your job.</p>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">{c.credentials.heading}</h2>
+          <p className="text-xl text-white/60 max-w-2xl mx-auto">{c.credentials.intro}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -398,7 +367,7 @@ const Credentials = () => {
   );
 };
 
-const Footer = () => {
+const Footer = ({ c }: { c: SiteContent }) => {
   return (
     <footer className="bg-slate-950 text-white py-20">
       <div className="max-w-7xl mx-auto px-6">
@@ -420,22 +389,22 @@ const Footer = () => {
               />
               <div className="flex flex-col w-[150px] leading-none">
                 <div className="flex justify-between w-full font-display font-bold text-2xl">
-                  {"WALEX".split("").map((char, i) => (
+                  {c.business.name.split("").map((char, i) => (
                     <span key={i} className="inline-block">{char}</span>
                   ))}
                 </div>
                 <div className="flex justify-between w-full font-display text-[8px] font-black uppercase text-white/40 mt-[2px]">
-                  {"PRO FINISHES".split("").map((char, i) => (
+                  {c.business.tagline.split("").map((char, i) => (
                     <span key={i} className="inline-block">{char === " " ? "\u00A0" : char}</span>
                   ))}
                 </div>
               </div>
             </div>
             <p className="text-white/50 max-w-sm mb-8 leading-relaxed">
-              Walex Pro Finishes LLC — tape, bed, texture and paint for North Dallas homes.
+              {c.footer.blurb}
             </p>
             <div className="flex gap-4">
-              <a href="tel:+19729045132" aria-label="Call Walex Pro Finishes" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
+              <a href={c.business.phoneHref} aria-label={`Call ${c.business.legalName}`} className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
                 <Phone className="w-5 h-5" />
               </a>
               <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors cursor-pointer">
@@ -445,30 +414,27 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="font-bold mb-6">Service Areas</h4>
+            <h4 className="font-bold mb-6">{c.footer.serviceAreasHeading}</h4>
             <ul className="space-y-4 text-white/50">
-              <li>North Dallas</li>
-              <li>Plano</li>
-              <li>Frisco</li>
-              <li>McKinney</li>
-              <li>Prosper</li>
+              {c.business.serviceAreas.map((area) => (<li key={area}>{area}</li>))}
             </ul>
           </div>
 
           <div>
-            <h4 className="font-bold mb-6">Contact Us</h4>
+            <h4 className="font-bold mb-6">{c.footer.contactHeading}</h4>
             <ul className="space-y-4 text-white/50">
-              <li><a href="tel:+19729045132" className="flex items-center gap-2 hover:text-white transition-colors"><Phone className="w-4 h-4" /> (972) 904-5132</a></li>
-                            <li className="flex items-center gap-2"><MapPin className="w-4 h-4" /> North Dallas, TX</li>
+              <li><a href={c.business.phoneHref} className="flex items-center gap-2 hover:text-white transition-colors"><Phone className="w-4 h-4" /> {c.business.phoneDisplay}</a></li>
+                            <li className="flex items-center gap-2"><MapPin className="w-4 h-4" /> {c.business.location}</li>
             </ul>
           </div>
         </div>
 
         <div className="pt-8 border-t border-white/10 flex flex-col md:row justify-between items-center gap-4 text-white/30 text-sm">
-          <p>© 2026 Walex Pro Finishes LLC. All rights reserved.</p>
+          <p>{c.footer.copyright}</p>
           <div className="flex gap-8">
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+            {c.footer.legalLinks.map((label) => (
+              <a key={label} href="#" className="hover:text-white transition-colors">{label}</a>
+            ))}
           </div>
         </div>
       </div>
@@ -486,54 +452,46 @@ const Footer = () => {
    now built around the strongest honest copy on the page — the argument for
    why he isn't the cheapest bid. Bring the stack back if and when the bonuses
    are real. */
-const Offer = () => {
+const Offer = ({ c }: { c: SiteContent }) => {
   return (
     <section id="offer" className="py-24 bg-slate-50">
       <div className="max-w-3xl mx-auto px-6 text-center">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-6 rounded-full bg-accent-gold/15 border border-accent-gold/30">
           <Check className="w-4 h-4 text-yellow-700" strokeWidth={3} />
-          <span className="text-sm font-semibold text-royalty-blue">One crew, one price</span>
+          <span className="text-sm font-semibold text-royalty-blue">{c.offer.badge}</span>
         </div>
 
         <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 text-balance">
-          Why we're not the cheapest bid
+          {c.offer.heading}
         </h2>
 
-        <p className="text-lg text-slate-600 leading-relaxed mb-6">
-          The lowest quote usually means thin prep — which is exactly why that paint peels in two
-          years. We prep every wall like it's our own home, so it lasts. You pay once, not twice.
-        </p>
-
-        <p className="text-lg text-slate-600 leading-relaxed mb-10">
-          Full prep, name-brand paint, clean lines — interior, exterior, or both. Same crew from the
-          first patch to the last coat, so there's nobody to point a finger at but us.
-        </p>
+        {c.offer.paragraphs.map((text, i) => (
+          <p key={i} className={`text-lg text-slate-600 leading-relaxed ${i === c.offer.paragraphs.length - 1 ? "mb-10" : "mb-6"}`}>
+            {text}
+          </p>
+        ))}
 
         <button className="bg-accent-gold text-royalty-blue px-8 py-4 rounded-full font-bold text-lg hover:brightness-105 transition-all inline-flex items-center gap-2">
-          Get My Free Estimate <ChevronRight className="w-5 h-5" />
+          {c.offer.cta} <ChevronRight className="w-5 h-5" />
         </button>
-        <p className="text-slate-400 text-sm mt-3">Takes 60 seconds · No obligation</p>
+        <p className="text-slate-400 text-sm mt-3">{c.offer.ctaNote}</p>
       </div>
     </section>
   );
 };
 
-const Guarantee = () => {
-  const shields = [
-    { n: "1", title: "The No-Peel Promise", body: "If our paint peels or cracks because of how we prepped or applied it, we come back and fix it. Free." },
-    { n: "2", title: "The Zero-Mess Promise", body: "We move the furniture, mask everything, and leave your home cleaner than we found it — or the cleanup is on us." },
-    { n: "3", title: "Redo Until You're Thrilled", body: "If you're not thrilled with the result, we'll redo whatever it takes until you are. No fighting, no fine print." },
-  ];
+const Guarantee = ({ c }: { c: SiteContent }) => {
+  const shields = c.guarantee.shields;
 
   return (
     <section id="guarantee" className="py-24 bg-royalty-blue text-white">
       <div className="max-w-5xl mx-auto px-6 text-center">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-6 rounded-full bg-accent-gold/15 border border-accent-gold/30">
           <ShieldCheck className="w-4 h-4 text-accent-gold" />
-          <span className="text-sm font-semibold text-accent-gold">Our Promise</span>
+          <span className="text-sm font-semibold text-accent-gold">{c.guarantee.badge}</span>
         </div>
-        <h2 className="text-4xl md:text-6xl font-bold mb-5 text-balance">The WALEX Triple-Shield Guarantee</h2>
-        <p className="text-xl text-white/60 max-w-2xl mx-auto mb-14">We take all the risk, so you don't have to. Three promises, in writing, on every job.</p>
+        <h2 className="text-4xl md:text-6xl font-bold mb-5 text-balance">{c.guarantee.heading}</h2>
+        <p className="text-xl text-white/60 max-w-2xl mx-auto mb-14">{c.guarantee.intro}</p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
           {shields.map((s) => (
@@ -556,40 +514,44 @@ const Guarantee = () => {
 };
 
 export default function LandingPage() {
+  /* One fetch for the whole page — content flows down as props so no component
+     goes looking for its own copy. */
+  const c = useSiteContent();
+
   return (
     <div className="min-h-screen">
-      <Navbar />
-      <Hero />
-      <Services />
-      <Offer />
-      <Process />
-      <Gallery />
-      <Guarantee />
-      <Credentials />
+      <Navbar c={c} />
+      <Hero c={c} />
+      <Services c={c} />
+      <Offer c={c} />
+      <Process c={c} />
+      <Gallery c={c} />
+      <Guarantee c={c} />
+      <Credentials c={c} />
       <section className="py-24 bg-white">
         <div className="max-w-5xl mx-auto px-6">
           <div className="bg-slate-950 rounded-[48px] p-12 md:p-20 text-center relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-royalty-blue/40 to-transparent" />
             <div className="relative z-10">
-              <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">Your neighbors already <br />booked. Your turn.</h2>
+              <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">{c.finalCta.headingTop} <br />{c.finalCta.headingBottom}</h2>
               <div className="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full bg-accent-gold/15 border border-accent-gold/30">
                 <CalendarClock className="w-4 h-4 text-accent-gold" />
-                <span className="text-sm font-semibold text-accent-gold">We take a limited number of jobs each month to protect quality — call to check this month's availability</span>
+                <span className="text-sm font-semibold text-accent-gold">{c.finalCta.badge}</span>
               </div>
-              <p className="text-xl text-white/60 mb-12 max-w-xl mx-auto">Free estimate, honest pricing, and a finish you'll be proud to show off — backed by the Triple-Shield Guarantee.</p>
+              <p className="text-xl text-white/60 mb-12 max-w-xl mx-auto">{c.finalCta.body}</p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <button className="w-full sm:w-auto bg-accent-gold text-royalty-blue px-10 py-5 rounded-full font-bold text-xl hover:brightness-105 transition-all">
-                  Get My Free Estimate
+                  {c.finalCta.ctaPrimary}
                 </button>
-                <a href="tel:+19729045132" className="w-full sm:w-auto text-white font-bold text-xl flex items-center justify-center gap-2 hover:opacity-70 transition-opacity">
-                  <Phone className="w-5 h-5" /> Call (972) 904-5132
+                <a href={c.business.phoneHref} className="w-full sm:w-auto text-white font-bold text-xl flex items-center justify-center gap-2 hover:opacity-70 transition-opacity">
+                  <Phone className="w-5 h-5" /> Call {c.business.phoneDisplay}
                 </a>
               </div>
             </div>
           </div>
         </div>
       </section>
-      <Footer />
+      <Footer c={c} />
     </div>
   );
 }
