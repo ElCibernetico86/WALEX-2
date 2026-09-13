@@ -1,4 +1,4 @@
-import { clearSessionCookie } from '../_lib';
+import { clearSessionCookie } from '../_lib.js';
 
 export default async function handler(_req: any, res: any) {
   res.setHeader('Set-Cookie', clearSessionCookie());

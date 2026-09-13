@@ -1,4 +1,4 @@
-import { isAuthed } from '../_lib';
+import { isAuthed } from '../_lib.js';
 
 /** Lets the admin page know on load whether to show the form or the password box. */
 export default async function handler(req: any, res: any) {

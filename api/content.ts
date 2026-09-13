@@ -6,7 +6,7 @@
  * its compiled-in defaults. A content endpoint must never be able to break the
  * page it serves.
  */
-import { supabase, CONTENT_TABLE, CONTENT_ROW_ID } from './_lib';
+import { supabase, CONTENT_TABLE, CONTENT_ROW_ID } from './_lib.js';
 
 export default async function handler(_req: any, res: any) {
   // 60s CDN cache: edits appear within a minute, and a burst of visitors

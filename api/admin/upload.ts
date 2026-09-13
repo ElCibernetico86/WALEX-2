@@ -12,7 +12,7 @@
  * The size cap below is therefore a backstop against a malformed or hostile
  * request, not the primary defence.
  */
-import { supabase, IMAGE_BUCKET, rejectIfUnauthed } from '../_lib';
+import { supabase, IMAGE_BUCKET, rejectIfUnauthed } from '../_lib.js';
 
 const MAX_BYTES = 2 * 1024 * 1024;
 const ALLOWED = new Set(['image/jpeg', 'image/png', 'image/webp']);

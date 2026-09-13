@@ -6,7 +6,7 @@
  * mean a migration every time a headline moves — for one row of text, that
  * trade is not worth making.
  */
-import { supabase, CONTENT_TABLE, CONTENT_ROW_ID, rejectIfUnauthed } from '../_lib';
+import { supabase, CONTENT_TABLE, CONTENT_ROW_ID, rejectIfUnauthed } from '../_lib.js';
 
 /** Refuse anything implausibly large — this is text, not a file upload. */
 const MAX_BYTES = 512 * 1024;
