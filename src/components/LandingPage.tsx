@@ -158,7 +158,7 @@ const Hero = () => {
         >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-8 rounded-full bg-white/10 backdrop-blur-md border border-white/20">
             <ShieldCheck className="w-4 h-4 text-accent-gold" />
-            <span className="text-sm font-medium text-white/90">Finishing North Texas homes since 2006 · Licensed Texas LLC</span>
+            <span className="text-sm font-medium text-white/90">Tape, bed, texture &amp; paint · North Dallas</span>
           </div>
           <h1 className="text-5xl md:text-8xl font-bold text-white mb-6 leading-[1.1] tracking-tight text-balance">
             Superior Wall & <br />
@@ -186,16 +186,6 @@ const Hero = () => {
           </div>
         </motion.div>
       </div>
-
-      <motion.div
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/40"
-      >
-        <div className="w-6 h-10 border-2 border-white/20 rounded-full flex justify-center p-1">
-          <div className="w-1 h-2 bg-white/40 rounded-full" />
-        </div>
-      </motion.div>
     </section>
   );
 };
@@ -379,8 +369,8 @@ const Gallery = () => {
    real words. */
 const Credentials = () => {
   const facts = [
-    { title: "Since 2006", body: "Twenty years finishing walls in North Texas — the last several running my own crew." },
-    { title: "Licensed Texas LLC", body: "Walex Pro Finishes LLC, registered with the Texas Secretary of State. Insured and ready for GC paperwork." },
+    { title: "Two decades on the tools", body: "I have been finishing walls in North Texas since 2006. The company is new — the hands are not." },
+    { title: "We show up and clean up", body: "We move the furniture, mask what needs masking, and leave the place cleaner than we found it." },
     { title: "One crew, whole job", body: "Tape, bed, texture and paint from the same hands. No handoffs, no finger-pointing between trades." }
   ];
 
@@ -445,7 +435,7 @@ const Footer = () => {
               </div>
             </div>
             <p className="text-white/50 max-w-sm mb-8 leading-relaxed">
-              Walex Pro Finishes LLC — tape, bed, texture and paint for North Dallas homes. A licensed Texas company.
+              Walex Pro Finishes LLC — tape, bed, texture and paint for North Dallas homes.
             </p>
             <div className="flex gap-4">
               <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors cursor-pointer">
@@ -531,7 +521,7 @@ const Offer = () => {
               <div className="flex-1">
                 <div className="flex items-center flex-wrap gap-x-3 gap-y-1">
                   <span className="font-bold text-slate-900">
-                    {item.bonus && <span className="text-accent-gold">BONUS: </span>}{item.title}
+                    {item.bonus && <span className="text-yellow-700">BONUS: </span>}{item.title}
                   </span>
                   <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${item.bonus ? "bg-accent-gold/15 text-yellow-700" : "bg-slate-100 text-slate-400"}`}>{item.value}</span>
                 </div>
