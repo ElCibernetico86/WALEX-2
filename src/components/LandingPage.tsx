@@ -1,9 +1,39 @@
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 import { ChevronRight, Paintbrush, Home, ShieldCheck, Star, Phone, MapPin, Menu, X, CheckCircle2, Check, CalendarClock } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, type ComponentType } from "react";
 import { useSiteContent } from "../useSiteContent";
-import type { SiteContent } from "../siteContent";
+import { defaultContent, type SectionRef, type SiteContent } from "../siteContent";
+
+/**
+ * What every switchable section is handed.
+ *
+ * `d` is that section's own slice of the content, looked up by its id — not by
+ * a hard-coded key — so the same layout can appear twice on the page with
+ * different words in each copy.
+ *
+ * `id` becomes the anchor the navbar links to, so it has to come from the
+ * section list rather than being written into the markup.
+ */
+type SectionProps<D> = { c: SiteContent; d: D; id: string };
+
+/**
+ * The running order, defended against a saved blob that predates the section
+ * list or was hand-edited in the database.
+ *
+ * Missing entirely means an older save, so use the shipped order. An empty
+ * list, though, is a real choice and is left alone. Duplicate ids are dropped
+ * because two sections sharing an id means two elements sharing an anchor.
+ */
+function resolveSections(c: SiteContent): SectionRef[] {
+  const list = Array.isArray(c.sections) ? c.sections : defaultContent.sections;
+  const seen = new Set<string>();
+  return list.filter((s) => {
+    if (!s || typeof s.id !== "string" || !s.id || seen.has(s.id)) return false;
+    seen.add(s.id);
+    return true;
+  });
+}
 
 const Navbar = ({ c }: { c: SiteContent }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -28,6 +58,16 @@ const Navbar = ({ c }: { c: SiteContent }) => {
   const primaryColor = useTransform(scrollY, [triggerStart, triggerEnd], ["#ffffff", "#002366"]); // transition to royalty-blue
   const textColor = useTransform(scrollY, [triggerStart, triggerEnd], ["#ffffff", "#0f172a"]); // transition to slate-900
   const subTextColor = useTransform(scrollY, [triggerStart, triggerEnd], ["rgba(255, 255, 255, 0.6)", "rgb(100, 116, 139)"]); // transition to slate-500
+
+  /* A menu link is shown only when it actually lands somewhere. The label is
+     free text and the anchor is derived from it, so hiding or removing the
+     Gallery section would otherwise leave a "Gallery" link that scrolls
+     nowhere. The admin flags any link this drops, so it is never a silent
+     disappearance. */
+  const anchors = new Set(
+    resolveSections(c).filter((s) => s.enabled !== false).map((s) => s.id.toLowerCase()),
+  );
+  const links = c.nav.links.filter((item) => anchors.has(item.toLowerCase()));
 
   return (
     <motion.nav
@@ -78,7 +118,7 @@ const Navbar = ({ c }: { c: SiteContent }) => {
         </div>
 
         <div className="hidden md:flex items-center gap-8">
-          {c.nav.links.map((item) => (
+          {links.map((item) => (
             <motion.a
               key={item}
               href={`#${item.toLowerCase()}`}
@@ -109,7 +149,7 @@ const Navbar = ({ c }: { c: SiteContent }) => {
           animate={{ opacity: 1, y: 0 }}
           className="absolute top-full left-0 w-full bg-white border-b p-6 flex flex-col gap-4 md:hidden shadow-xl"
         >
-          {c.nav.links.map((item) => (
+          {links.map((item) => (
             <a
               key={item}
               href={`#${item.toLowerCase()}`}
@@ -188,9 +228,9 @@ const Hero = ({ c }: { c: SiteContent }) => {
   );
 };
 
-const Services = ({ c }: { c: SiteContent }) => {
+const Services = ({ d, id }: SectionProps<SiteContent["services"]>) => {
   /* Icons and column spans are layout, not content — they stay here and pair
-     with c.services.items by position. */
+     with d.items by position. */
   const icons = [
     <Home className="w-6 h-6" />,
     <Paintbrush className="w-6 h-6" />,
@@ -198,18 +238,18 @@ const Services = ({ c }: { c: SiteContent }) => {
     <Star className="w-6 h-6" />,
   ];
   const spans = ["md:col-span-2", "md:col-span-1", "md:col-span-1", "md:col-span-2"];
-  const services = c.services.items.map((item, i) => ({
+  const services = d.items.map((item, i) => ({
     ...item,
     icon: icons[i % icons.length],
     span: spans[i % spans.length],
   }));
 
   return (
-    <section id="services" className="py-24 bg-white">
+    <section id={id} className="py-24 bg-white">
       <div className="max-w-7xl mx-auto px-6">
         <div className="mb-16">
-          <h2 className="text-4xl md:text-6xl font-bold text-slate-900 mb-6">{c.services.headingTop} <br /><span className="text-royalty-blue">{c.services.headingBottom}</span></h2>
-          <p className="text-xl text-slate-500 max-w-2xl">{c.services.intro}</p>
+          <h2 className="text-4xl md:text-6xl font-bold text-slate-900 mb-6">{d.headingTop} <br /><span className="text-royalty-blue">{d.headingBottom}</span></h2>
+          <p className="text-xl text-slate-500 max-w-2xl">{d.intro}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -247,7 +287,7 @@ const Services = ({ c }: { c: SiteContent }) => {
                 </div>
                 <div className="mt-8">
                   <button className="text-royalty-blue font-semibold flex items-center gap-1 group/btn">
-                    {c.services.linkLabel} <ChevronRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                    {d.linkLabel} <ChevronRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
                   </button>
                 </div>
               </div>
@@ -259,15 +299,15 @@ const Services = ({ c }: { c: SiteContent }) => {
   );
 };
 
-const Process = ({ c }: { c: SiteContent }) => {
-  const steps = c.process.steps;
+const Process = ({ d, id }: SectionProps<SiteContent["process"]>) => {
+  const steps = d.steps;
 
   return (
-    <section id="process" className="py-24 bg-slate-50">
+    <section id={id} className="py-24 bg-slate-50">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-20">
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">{c.process.heading}</h2>
-          <p className="text-xl text-slate-500 max-w-2xl mx-auto">{c.process.intro}</p>
+          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">{d.heading}</h2>
+          <p className="text-xl text-slate-500 max-w-2xl mx-auto">{d.intro}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
@@ -294,18 +334,18 @@ const Process = ({ c }: { c: SiteContent }) => {
   );
 };
 
-const Gallery = ({ c }: { c: SiteContent }) => {
-  const images = c.gallery.images;
+const Gallery = ({ d, id }: SectionProps<SiteContent["gallery"]>) => {
+  const images = d.images;
 
   return (
-    <section id="gallery" className="py-24 bg-white overflow-hidden">
+    <section id={id} className="py-24 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 mb-16 flex justify-between items-end">
         <div>
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">{c.gallery.heading}</h2>
-          <p className="text-xl text-slate-500">{c.gallery.intro}</p>
+          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">{d.heading}</h2>
+          <p className="text-xl text-slate-500">{d.intro}</p>
         </div>
         <button className="hidden md:flex items-center gap-2 text-royalty-blue font-bold">
-          {c.gallery.cta} <ChevronRight className="w-5 h-5" />
+          {d.cta} <ChevronRight className="w-5 h-5" />
         </button>
       </div>
 
@@ -337,15 +377,15 @@ const Gallery = ({ c }: { c: SiteContent }) => {
    Replaced with verifiable credentials until there are real reviews to show.
    When Google reviews exist, bring quotes back here — real name, real city,
    real words. */
-const Credentials = ({ c }: { c: SiteContent }) => {
-  const facts = c.credentials.facts;
+const Credentials = ({ d, id }: SectionProps<SiteContent["credentials"]>) => {
+  const facts = d.facts;
 
   return (
-    <section id="credentials" className="py-24 bg-royalty-blue text-white">
+    <section id={id} className="py-24 bg-royalty-blue text-white">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-20">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">{c.credentials.heading}</h2>
-          <p className="text-xl text-white/60 max-w-2xl mx-auto">{c.credentials.intro}</p>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">{d.heading}</h2>
+          <p className="text-xl text-white/60 max-w-2xl mx-auto">{d.intro}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -452,46 +492,46 @@ const Footer = ({ c }: { c: SiteContent }) => {
    now built around the strongest honest copy on the page — the argument for
    why he isn't the cheapest bid. Bring the stack back if and when the bonuses
    are real. */
-const Offer = ({ c }: { c: SiteContent }) => {
+const Offer = ({ d, id }: SectionProps<SiteContent["offer"]>) => {
   return (
-    <section id="offer" className="py-24 bg-slate-50">
+    <section id={id} className="py-24 bg-slate-50">
       <div className="max-w-3xl mx-auto px-6 text-center">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-6 rounded-full bg-accent-gold/15 border border-accent-gold/30">
           <Check className="w-4 h-4 text-yellow-700" strokeWidth={3} />
-          <span className="text-sm font-semibold text-royalty-blue">{c.offer.badge}</span>
+          <span className="text-sm font-semibold text-royalty-blue">{d.badge}</span>
         </div>
 
         <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 text-balance">
-          {c.offer.heading}
+          {d.heading}
         </h2>
 
-        {c.offer.paragraphs.map((text, i) => (
-          <p key={i} className={`text-lg text-slate-600 leading-relaxed ${i === c.offer.paragraphs.length - 1 ? "mb-10" : "mb-6"}`}>
+        {d.paragraphs.map((text, i) => (
+          <p key={i} className={`text-lg text-slate-600 leading-relaxed ${i === d.paragraphs.length - 1 ? "mb-10" : "mb-6"}`}>
             {text}
           </p>
         ))}
 
         <button className="bg-accent-gold text-royalty-blue px-8 py-4 rounded-full font-bold text-lg hover:brightness-105 transition-all inline-flex items-center gap-2">
-          {c.offer.cta} <ChevronRight className="w-5 h-5" />
+          {d.cta} <ChevronRight className="w-5 h-5" />
         </button>
-        <p className="text-slate-400 text-sm mt-3">{c.offer.ctaNote}</p>
+        <p className="text-slate-400 text-sm mt-3">{d.ctaNote}</p>
       </div>
     </section>
   );
 };
 
-const Guarantee = ({ c }: { c: SiteContent }) => {
-  const shields = c.guarantee.shields;
+const Guarantee = ({ d, id }: SectionProps<SiteContent["guarantee"]>) => {
+  const shields = d.shields;
 
   return (
-    <section id="guarantee" className="py-24 bg-royalty-blue text-white">
+    <section id={id} className="py-24 bg-royalty-blue text-white">
       <div className="max-w-5xl mx-auto px-6 text-center">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-6 rounded-full bg-accent-gold/15 border border-accent-gold/30">
           <ShieldCheck className="w-4 h-4 text-accent-gold" />
-          <span className="text-sm font-semibold text-accent-gold">{c.guarantee.badge}</span>
+          <span className="text-sm font-semibold text-accent-gold">{d.badge}</span>
         </div>
-        <h2 className="text-4xl md:text-6xl font-bold mb-5 text-balance">{c.guarantee.heading}</h2>
-        <p className="text-xl text-white/60 max-w-2xl mx-auto mb-14">{c.guarantee.intro}</p>
+        <h2 className="text-4xl md:text-6xl font-bold mb-5 text-balance">{d.heading}</h2>
+        <p className="text-xl text-white/60 max-w-2xl mx-auto mb-14">{d.intro}</p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
           {shields.map((s) => (
@@ -513,6 +553,51 @@ const Guarantee = ({ c }: { c: SiteContent }) => {
   );
 };
 
+/* Was inline in the page. Pulled out so it can be moved, hidden or removed
+   like any other section — a closing CTA is a section, not page furniture. */
+const FinalCta = ({ c, d, id }: SectionProps<SiteContent["finalCta"]>) => {
+  return (
+    <section id={id} className="py-24 bg-white">
+      <div className="max-w-5xl mx-auto px-6">
+        <div className="bg-slate-950 rounded-[48px] p-12 md:p-20 text-center relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-royalty-blue/40 to-transparent" />
+          <div className="relative z-10">
+            <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">{d.headingTop} <br />{d.headingBottom}</h2>
+            <div className="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full bg-accent-gold/15 border border-accent-gold/30">
+              <CalendarClock className="w-4 h-4 text-accent-gold" />
+              <span className="text-sm font-semibold text-accent-gold">{d.badge}</span>
+            </div>
+            <p className="text-xl text-white/60 mb-12 max-w-xl mx-auto">{d.body}</p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <button className="w-full sm:w-auto bg-accent-gold text-royalty-blue px-10 py-5 rounded-full font-bold text-xl hover:brightness-105 transition-all">
+                {d.ctaPrimary}
+              </button>
+              <a href={c.business.phoneHref} className="w-full sm:w-auto text-white font-bold text-xl flex items-center justify-center gap-2 hover:opacity-70 transition-opacity">
+                <Phone className="w-5 h-5" /> Call {c.business.phoneDisplay}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+/**
+ * Section type → the layout that draws it. The keys must match SECTION_TYPES
+ * in siteContent.ts; a type listed there but missing here is skipped rather
+ * than crashing the page.
+ */
+const SECTION_LAYOUTS: Record<string, ComponentType<SectionProps<any>>> = {
+  services: Services,
+  offer: Offer,
+  process: Process,
+  gallery: Gallery,
+  guarantee: Guarantee,
+  credentials: Credentials,
+  finalCta: FinalCta,
+};
+
 export default function LandingPage() {
   /* One fetch for the whole page — content flows down as props so no component
      goes looking for its own copy. */
@@ -522,35 +607,24 @@ export default function LandingPage() {
     <div className="min-h-screen">
       <Navbar c={c} />
       <Hero c={c} />
-      <Services c={c} />
-      <Offer c={c} />
-      <Process c={c} />
-      <Gallery c={c} />
-      <Guarantee c={c} />
-      <Credentials c={c} />
-      <section className="py-24 bg-white">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="bg-slate-950 rounded-[48px] p-12 md:p-20 text-center relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-royalty-blue/40 to-transparent" />
-            <div className="relative z-10">
-              <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">{c.finalCta.headingTop} <br />{c.finalCta.headingBottom}</h2>
-              <div className="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full bg-accent-gold/15 border border-accent-gold/30">
-                <CalendarClock className="w-4 h-4 text-accent-gold" />
-                <span className="text-sm font-semibold text-accent-gold">{c.finalCta.badge}</span>
-              </div>
-              <p className="text-xl text-white/60 mb-12 max-w-xl mx-auto">{c.finalCta.body}</p>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <button className="w-full sm:w-auto bg-accent-gold text-royalty-blue px-10 py-5 rounded-full font-bold text-xl hover:brightness-105 transition-all">
-                  {c.finalCta.ctaPrimary}
-                </button>
-                <a href={c.business.phoneHref} className="w-full sm:w-auto text-white font-bold text-xl flex items-center justify-center gap-2 hover:opacity-70 transition-opacity">
-                  <Phone className="w-5 h-5" /> Call {c.business.phoneDisplay}
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+
+      {/* The body of the page is whatever the section list says it is, in the
+          order it says. Everything between the hero and the footer is Alex's
+          to arrange from /admin. */}
+      {resolveSections(c).map((section) => {
+        if (section.enabled === false) return null;
+
+        const Layout = SECTION_LAYOUTS[section.type];
+        const data = (c as Record<string, any>)[section.id];
+
+        /* An unknown layout or missing content means the saved list is ahead of
+           (or behind) the deployed code. Skip that one section — a page short a
+           section still sells; a page that threw renders nothing at all. */
+        if (!Layout || !data) return null;
+
+        return <Layout key={section.id} id={section.id} c={c} d={data} />;
+      })}
+
       <Footer c={c} />
     </div>
   );

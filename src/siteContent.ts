@@ -43,6 +43,46 @@ export type Fact = {
   body: string;
 };
 
+/**
+ * The section layouts that exist in code. The label is what the admin shows.
+ *
+ * Adding a new kind of section means writing its component in LandingPage.tsx,
+ * adding its default content below, and adding it here — all three, or it
+ * won't appear in the "Add section" menu.
+ */
+export const SECTION_TYPES = {
+  services: "Services",
+  offer: "Why we're not the cheapest",
+  process: "Process",
+  gallery: "Gallery",
+  guarantee: "Guarantee",
+  credentials: "Credentials",
+  finalCta: "Closing call-to-action",
+} as const;
+
+export type SectionType = keyof typeof SECTION_TYPES;
+
+export type SectionRef = {
+  /**
+   * Unique on the page. Doubles as the anchor (`#services`) AND the key its
+   * content lives under, which is why the defaults below use ids identical to
+   * the existing content keys — the section list could be added without
+   * touching a single word of what was already saved.
+   *
+   * A second section of the same type gets "services-2" and its own content.
+   */
+  id: string;
+  /** Which layout renders it. */
+  type: SectionType;
+  /** Hidden sections keep their content — they just don't render. */
+  enabled: boolean;
+};
+
+/** True for keys that hold a section's content, so the admin can tell them
+ *  apart from the always-present ones (business, nav, hero, footer). */
+export const isSectionContentKey = (key: string) =>
+  Object.keys(SECTION_TYPES).some((t) => key === t || key.startsWith(`${t}-`));
+
 export type SiteContent = typeof defaultContent;
 
 export const defaultContent = {
@@ -59,6 +99,25 @@ export const defaultContent = {
     location: "North Dallas, TX",
     serviceAreas: ["North Dallas", "Plano", "Frisco", "McKinney", "Prosper"],
   },
+
+  /**
+   * Which sections are on the page, and in what order. The page renders this
+   * list — it is not a hint, it IS the running order.
+   *
+   * The navbar, the hero and the footer are deliberately NOT in here. A page
+   * with no hero has no top and no first impression, and a page with no footer
+   * has no phone number; making those removable buys nothing and breaks the
+   * page in ways that are hard to notice from the admin.
+   */
+  sections: [
+    { id: "services", type: "services", enabled: true },
+    { id: "offer", type: "offer", enabled: true },
+    { id: "process", type: "process", enabled: true },
+    { id: "gallery", type: "gallery", enabled: true },
+    { id: "guarantee", type: "guarantee", enabled: true },
+    { id: "credentials", type: "credentials", enabled: true },
+    { id: "finalCta", type: "finalCta", enabled: true },
+  ] as SectionRef[],
 
   nav: {
     links: ["Services", "Process", "Gallery", "Credentials"],
