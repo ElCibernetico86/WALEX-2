@@ -96,6 +96,18 @@ export const defaultContent = {
     phoneDisplay: "(972) 904-5132",
     /** Must stay in tel: format — this is what a phone actually dials. */
     phoneHref: "tel:+19729045132",
+    /**
+     * Public contact address. The mailto: link is built from this, so there is
+     * only one thing to keep right.
+     *
+     * Empty hides the row entirely — the same rule the phone has. An address
+     * that doesn't receive mail is worse than no address, because the enquiry
+     * is lost silently and the sender thinks they reached someone.
+     *
+     * Prefer an ALIAS here over a personal mailbox: a published address gets
+     * scraped, and an alias can be retired without touching the inbox behind it.
+     */
+    email: "",
     location: "North Dallas, TX",
     serviceAreas: ["North Dallas", "Plano", "Frisco", "McKinney", "Prosper"],
   },

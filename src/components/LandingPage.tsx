@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
-import { ChevronRight, Paintbrush, Home, ShieldCheck, Star, Phone, MapPin, Menu, X, CheckCircle2, Check, CalendarClock } from "lucide-react";
+import { ChevronRight, Paintbrush, Home, ShieldCheck, Star, Phone, MapPin, Menu, X, CheckCircle2, Check, CalendarClock, Mail } from "lucide-react";
 import { useState, useEffect, type ComponentType } from "react";
 import { useSiteContent } from "../useSiteContent";
 import { defaultContent, type SectionRef, type SiteContent } from "../siteContent";
@@ -464,7 +464,16 @@ const Footer = ({ c }: { c: SiteContent }) => {
             <h4 className="font-bold mb-6">{c.footer.contactHeading}</h4>
             <ul className="space-y-4 text-white/50">
               <li><a href={c.business.phoneHref} className="flex items-center gap-2 hover:text-white transition-colors"><Phone className="w-4 h-4" /> {c.business.phoneDisplay}</a></li>
-                            <li className="flex items-center gap-2"><MapPin className="w-4 h-4" /> {c.business.location}</li>
+              {/* Hidden when blank, so an address that doesn't receive mail can
+                  never sit on the site collecting enquiries nobody reads. */}
+              {c.business.email && (
+                <li>
+                  <a href={`mailto:${c.business.email}`} className="flex items-center gap-2 hover:text-white transition-colors">
+                    <Mail className="w-4 h-4" /> {c.business.email}
+                  </a>
+                </li>
+              )}
+              <li className="flex items-center gap-2"><MapPin className="w-4 h-4" /> {c.business.location}</li>
             </ul>
           </div>
         </div>
