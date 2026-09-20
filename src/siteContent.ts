@@ -107,7 +107,7 @@ export const defaultContent = {
      * Prefer an ALIAS here over a personal mailbox: a published address gets
      * scraped, and an alias can be retired without touching the inbox behind it.
      */
-    email: "",
+    email: "contact@walexprofinishes.com",
     location: "North Dallas, TX",
     serviceAreas: ["North Dallas", "Plano", "Frisco", "McKinney", "Prosper"],
   },
